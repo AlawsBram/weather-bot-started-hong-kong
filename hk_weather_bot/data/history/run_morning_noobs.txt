@@ -1,0 +1,29 @@
+
+=== No-peek history backtest: 2026-04-15 .. 2026-10-19 | decision: morning (09:00 HKT on the day) | HKO forecast on, live max-so-far OFF, taker fee 0.05 ===
+Fetching HKO readings 2026-03-12 .. 2026-10-19
+Fetching as-issued model forecasts (lead 1 day)
+Fetching HKO's own forecast as issued at the decision time (data.gov.hk archive)
+Fetching Polymarket prices at decision time (morning)
+  readings: 222 | sources: ecmwf 222d, gfs 222d, icon 218d, hko_official 207d | live max-so-far: 0d | markets: 186
+
+Training: 136 days (to 2026-08-31) | Test: 49 days (after 2026-08-31, never seen by the tuner)
+Tuned on training only -> uncertainty scale 0.7, market blend 0.0 (1 = ignore market), min edge 6 pts. Spread penalty 2c + taker fee 0.05*p*(1-p).
+  NOTE: the tuner chose to copy the market — the model added nothing on training data.
+
+                set    days Brier bot Brier mkt    beat P(win) bot   mkt  trades  won    P&L $
+tuned (frozen)  train   136     0.655     0.655   11/136       35%   35%       1    1   +12.11
+                test     49     0.662     0.662    4/49        34%   34%       0    0    +0.00
+model only      train   136     0.708     0.655   57/136       31%   35%     217   93  +182.32
+                test     49     0.719     0.662   16/49        29%   34%      86   40   -96.48
+untuned v2      train   136     0.664     0.655   55/136       31%   35%      87   42  +260.77
+                test     49     0.679     0.662   20/49        30%   34%      38   17   -62.03
+
+VERDICT (test period only):
+  Probabilities: WORSE than the market (0.662 vs 0.662, lower is better)
+  Paper trading: 0 trades, P&L $+0.00 at $10/trade
+
+Cut-off rule matched Polymarket's settled winner on every day checked.
+Skipped 1 day(s) (missing data), e.g. 2026-05-19: market prices missing at decision time
+
+Per-day test results: C:\Users\Administrator\polymarket-bot\Speed+VPS,weather bot+btc-5-minute bot\Weather bot starting from scratch\hk_weather_bot\data\history\backtest from 2026-10-21 to 2026-04-15 - morning_noobs.csv
+

@@ -1,0 +1,29 @@
+
+=== No-peek history backtest: 2026-04-15 .. 2026-10-19 | decision: afternoon (14:00 HKT on the day) | HKO forecast on, live max-so-far on, taker fee 0.05 ===
+Fetching HKO readings 2026-03-12 .. 2026-10-19
+Fetching as-issued model forecasts (lead 1 day)
+Fetching HKO's own forecast as issued at the decision time (data.gov.hk archive)
+Fetching HKO max-since-midnight as it read at the decision time (data.gov.hk archive)
+Fetching Polymarket prices at decision time (afternoon)
+  readings: 222 | sources: ecmwf 222d, gfs 222d, icon 218d | live max-so-far: 183d | markets: 186
+
+Training: 135 days (to 2026-08-31) | Test: 49 days (after 2026-08-31, never seen by the tuner)
+Tuned on training only -> uncertainty scale 0.7, market blend 0.25 (1 = ignore market), min edge 4 pts. Spread penalty 2c + taker fee 0.05*p*(1-p).
+
+                set    days Brier bot Brier mkt    beat P(win) bot   mkt  trades  won    P&L $
+tuned (frozen)  train   135     0.423     0.431   55/135       54%   57%     156   52  +602.53
+                test     49     0.444     0.472   21/49        52%   54%      42   23  +364.37
+model only      train   135     0.683     0.431   46/135       44%   57%     300  112  +208.45
+                test     49     0.557     0.472   17/49        48%   54%     108   44  +105.29
+untuned v2      train   135     0.468     0.431   48/135       48%   57%     230   67  +186.41
+                test     49     0.468     0.472   13/49        47%   54%      81   31  +189.01
+
+VERDICT (test period only):
+  Probabilities: BETTER than the market (0.444 vs 0.472, lower is better)
+  Paper trading: 42 trades, P&L $+364.37 at $10/trade
+
+Cut-off rule matched Polymarket's settled winner on every day checked.
+Skipped 2 day(s) (missing data), e.g. 2026-04-16: market prices missing at decision time
+
+Per-day test results: C:\Users\Administrator\polymarket-bot\Speed+VPS,weather bot+btc-5-minute bot\Weather bot starting from scratch\hk_weather_bot\data\history\backtest from 2026-10-21 to 2026-04-15 - afternoon.csv
+
