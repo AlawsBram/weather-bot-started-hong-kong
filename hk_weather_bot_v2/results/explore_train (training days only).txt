@@ -1,0 +1,72 @@
+
+===== evening: 135 training days =====
+  bucket prices add up to: avg 1.034
+  market's expected bucket minus actual: avg +0.00  (abs 0.84)
+  model's expected bucket minus actual:  avg -0.07  (abs 1.03)
+  when model and market disagree by 1 degree, the market is wrong by -0.07 degrees (+-0.14; 0 = model adds nothing, 1 = model is right)
+  calibration (price bin -> how often that bucket actually won):
+     0-  5c  n= 942  avg price 0.008  won 0.006  (+-0.003)
+     5- 10c  n= 100  avg price 0.072  won 0.090  (+-0.029)
+    10- 15c  n=  83  avg price 0.122  won 0.133  (+-0.037)
+    15- 20c  n=  48  avg price 0.170  won 0.125  (+-0.048)
+    20- 25c  n=  54  avg price 0.224  won 0.241  (+-0.058)
+    25- 30c  n=  50  avg price 0.272  won 0.220  (+-0.059)
+    30- 35c  n=  58  avg price 0.323  won 0.310  (+-0.061)
+    35- 40c  n=  78  avg price 0.373  won 0.423  (+-0.056)
+    40- 45c  n=  47  avg price 0.420  won 0.340  (+-0.069)
+
+===== morning: 136 training days =====
+  bucket prices add up to: avg 1.032
+  market's expected bucket minus actual: avg +0.00  (abs 0.74)
+  model's expected bucket minus actual:  avg -0.07  (abs 0.81)
+  when model and market disagree by 1 degree, the market is wrong by +0.09 degrees (+-0.17; 0 = model adds nothing, 1 = model is right)
+  calibration (price bin -> how often that bucket actually won):
+     0-  5c  n=1005  avg price 0.006  won 0.004  (+-0.002)
+     5- 10c  n=  86  avg price 0.074  won 0.105  (+-0.033)
+    10- 15c  n=  57  avg price 0.123  won 0.105  (+-0.041)
+    15- 20c  n=  52  avg price 0.171  won 0.135  (+-0.047)
+    20- 25c  n=  40  avg price 0.218  won 0.300  (+-0.072)
+    25- 30c  n=  44  avg price 0.273  won 0.295  (+-0.069)
+    30- 35c  n=  47  avg price 0.324  won 0.319  (+-0.068)
+    35- 40c  n=  43  avg price 0.375  won 0.349  (+-0.073)
+    40- 45c  n=  60  avg price 0.422  won 0.367  (+-0.062)
+    45- 50c  n=  27  avg price 0.467  won 0.481  (+-0.096)
+    50- 55c  n=  15  avg price 0.529  won 0.333  (+-0.122)
+
+===== noon: 136 training days =====
+  bucket prices add up to: avg 1.022
+  market's expected bucket minus actual: avg +0.01  (abs 0.64)
+  model's expected bucket minus actual:  avg -0.07  (abs 0.91)
+  when model and market disagree by 1 degree, the market is wrong by +0.02 degrees (+-0.08; 0 = model adds nothing, 1 = model is right)
+  calibration (price bin -> how often that bucket actually won):
+     0-  5c  n=1073  avg price 0.004  won 0.003  (+-0.002)
+     5- 10c  n=  65  avg price 0.073  won 0.062  (+-0.030)
+    10- 15c  n=  50  avg price 0.121  won 0.100  (+-0.042)
+    15- 20c  n=  34  avg price 0.169  won 0.176  (+-0.065)
+    20- 25c  n=  33  avg price 0.220  won 0.424  (+-0.086)
+    25- 30c  n=  36  avg price 0.272  won 0.333  (+-0.079)
+    30- 35c  n=  28  avg price 0.326  won 0.321  (+-0.088)
+    35- 40c  n=  28  avg price 0.373  won 0.250  (+-0.082)
+    40- 45c  n=  40  avg price 0.428  won 0.525  (+-0.079)
+    45- 50c  n=  29  avg price 0.475  won 0.414  (+-0.091)
+    50- 55c  n=  23  avg price 0.520  won 0.391  (+-0.102)
+    55- 60c  n=  25  avg price 0.577  won 0.560  (+-0.099)
+
+===== afternoon: 135 training days =====
+  bucket prices add up to: avg 1.013
+  market's expected bucket minus actual: avg -0.01  (abs 0.46)
+  model's expected bucket minus actual:  avg -0.06  (abs 0.91)
+  when model and market disagree by 1 degree, the market is wrong by +0.07 degrees (+-0.05; 0 = model adds nothing, 1 = model is right)
+  calibration (price bin -> how often that bucket actually won):
+     0-  5c  n=1158  avg price 0.003  won 0.004  (+-0.002)
+     5- 10c  n=  58  avg price 0.074  won 0.103  (+-0.040)
+    10- 15c  n=  26  avg price 0.123  won 0.115  (+-0.063)
+    15- 20c  n=  27  avg price 0.173  won 0.185  (+-0.075)
+    25- 30c  n=  23  avg price 0.271  won 0.261  (+-0.092)
+    35- 40c  n=  15  avg price 0.372  won 0.333  (+-0.122)
+    40- 45c  n=  16  avg price 0.418  won 0.562  (+-0.124)
+    45- 50c  n=  16  avg price 0.475  won 0.438  (+-0.124)
+    50- 55c  n=  16  avg price 0.526  won 0.375  (+-0.121)
+    55- 60c  n=  15  avg price 0.570  won 0.267  (+-0.114)
+    60- 65c  n=  15  avg price 0.618  won 0.533  (+-0.129)
+    65- 70c  n=  18  avg price 0.674  won 0.722  (+-0.106)
