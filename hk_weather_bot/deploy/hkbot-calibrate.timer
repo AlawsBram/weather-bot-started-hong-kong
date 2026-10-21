@@ -1,0 +1,10 @@
+[Unit]
+Description=HK weather bot: weekly calibration + backtest, Sunday 09:30 HKT
+
+[Timer]
+OnCalendar=Sun *-*-* 09:30:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@calibrate.service
+
+[Install]
+WantedBy=timers.target

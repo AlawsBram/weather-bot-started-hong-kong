@@ -1,0 +1,12 @@
+[Unit]
+Description=HK weather bot: snapshot every 30 min + right after HKO's 11:30/16:30 bulletins (HKT)
+
+[Timer]
+OnCalendar=*-*-* *:00,30:00 Asia/Hong_Kong
+OnCalendar=*-*-* 11:40:00 Asia/Hong_Kong
+OnCalendar=*-*-* 16:40:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@snapshot.service
+
+[Install]
+WantedBy=timers.target

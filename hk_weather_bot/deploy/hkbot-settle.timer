@@ -1,0 +1,12 @@
+[Unit]
+Description=HK weather bot: settle + score finished days at 10:20, 15:20, 20:20 HKT
+
+[Timer]
+OnCalendar=*-*-* 10:20:00 Asia/Hong_Kong
+OnCalendar=*-*-* 15:20:00 Asia/Hong_Kong
+OnCalendar=*-*-* 20:20:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@settle.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,3 @@
+requests>=2.31
+pytest>=8.0
+playwright==1.63.0   # same version as the other bots on twapvm, so the Chromium download is shared

@@ -1,0 +1,10 @@
+[Unit]
+Description=HK weather bot: health check every 15 min
+
+[Timer]
+OnCalendar=*-*-* *:07,22,37,52:00
+AccuracySec=20s
+Unit=hkbot@health.service
+
+[Install]
+WantedBy=timers.target

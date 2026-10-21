@@ -1,0 +1,15 @@
+[Unit]
+Description=HK weather bot job %i (paper trading only, public data, no keys)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hkbot
+ExecStart=/home/ubuntupolymarket3/hkbot/deploy/run_job.sh %i
+Environment=PYTHONUNBUFFERED=1
+Nice=10
+CPUQuota=150%
+MemoryMax=1500M
+TimeoutStartSec=20min

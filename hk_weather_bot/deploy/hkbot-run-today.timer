@@ -1,0 +1,11 @@
+[Unit]
+Description=HK weather bot: same-day run with live readings at 11:50 and 14:20 HKT (06:50 / 09:20 Nairobi)
+
+[Timer]
+OnCalendar=*-*-* 11:50:00 Asia/Hong_Kong
+OnCalendar=*-*-* 14:20:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@run-today.service
+
+[Install]
+WantedBy=timers.target

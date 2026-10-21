@@ -1,0 +1,10 @@
+[Unit]
+Description=HK weather bot: daily ledger backup at 03:10 HKT
+
+[Timer]
+OnCalendar=*-*-* 03:10:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=HK weather bot: predict + paper-trade TOMORROW at 22:15 HKT (17:15 Nairobi)
+
+[Timer]
+OnCalendar=*-*-* 22:15:00 Asia/Hong_Kong
+AccuracySec=20s
+Unit=hkbot@run-tomorrow.service
+
+[Install]
+WantedBy=timers.target

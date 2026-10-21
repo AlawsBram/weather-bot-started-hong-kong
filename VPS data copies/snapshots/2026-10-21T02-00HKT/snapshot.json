@@ -1,0 +1,784 @@
+{
+ "run_ts": "2026-10-21T02:00:39+08:00",
+ "targets": [
+  "2026-10-21",
+  "2026-10-22"
+ ],
+ "forecasts": {
+  "2026-10-21": {
+   "hko_official": 33.0,
+   "ecmwf": 31.9,
+   "gfs": 31.4,
+   "icon": 33.2
+  },
+  "2026-10-22": {
+   "hko_official": 32.0,
+   "ecmwf": 30.4,
+   "gfs": 30.5,
+   "icon": 29.9
+  }
+ },
+ "hko_9day_feed": {
+  "2026-10-21": 33.0,
+  "2026-10-22": 32.0,
+  "2026-10-23": 33.0,
+  "2026-10-24": 32.0,
+  "2026-10-25": 31.0,
+  "2026-10-26": 30.0,
+  "2026-10-27": 30.0,
+  "2026-10-28": 29.0,
+  "2026-10-29": 29.0
+ },
+ "hko_9day_page_datafile": {
+  "2026-10-21": 33.0,
+  "2026-10-22": 32.0,
+  "2026-10-23": 33.0,
+  "2026-10-24": 32.0,
+  "2026-10-25": 31.0,
+  "2026-10-26": 30.0,
+  "2026-10-27": 30.0,
+  "2026-10-28": 29.0,
+  "2026-10-29": 29.0
+ },
+ "max_since_midnight": 27.8,
+ "current_temp": 28.0,
+ "pages": [
+  {
+   "target": "2026-10-21",
+   "name": "polymarket_page",
+   "url": "https://polymarket.com/event/highest-temperature-in-hong-kong-on-october-21-2026",
+   "ok": true,
+   "values": {
+    "28\u00b0C or below": {
+     "buy_yes": 0.002,
+     "buy_no": 0.9990000000000001
+    },
+    "29\u00b0C": {
+     "buy_yes": 0.004,
+     "buy_no": 0.9990000000000001
+    },
+    "30\u00b0C": {
+     "buy_yes": 0.01,
+     "buy_no": 0.9940000000000001
+    },
+    "31\u00b0C": {
+     "buy_yes": 0.079,
+     "buy_no": 0.929
+    },
+    "32\u00b0C": {
+     "buy_yes": 0.43,
+     "buy_no": 0.59
+    },
+    "33\u00b0C": {
+     "buy_yes": 0.44,
+     "buy_no": 0.58
+    },
+    "34\u00b0C": {
+     "buy_yes": 0.08,
+     "buy_no": 0.93
+    },
+    "35\u00b0C": {
+     "buy_yes": 0.004,
+     "buy_no": 0.997
+    },
+    "36\u00b0C": {
+     "buy_yes": 0.001,
+     "buy_no": null
+    },
+    "37\u00b0C": {
+     "buy_yes": 0.001,
+     "buy_no": null
+    },
+    "38\u00b0C or higher": {
+     "buy_yes": 0.001,
+     "buy_no": null
+    }
+   },
+   "screenshot": "polymarket_2026-10-21.jpg",
+   "error": null
+  },
+  {
+   "target": "2026-10-22",
+   "name": "polymarket_page",
+   "url": "https://polymarket.com/event/highest-temperature-in-hong-kong-on-october-22-2026",
+   "ok": true,
+   "values": {
+    "26\u00b0C or below": {
+     "buy_yes": 0.02,
+     "buy_no": 0.9990000000000001
+    },
+    "27\u00b0C": {
+     "buy_yes": 0.02,
+     "buy_no": 0.9990000000000001
+    },
+    "28\u00b0C": {
+     "buy_yes": 0.005,
+     "buy_no": 0.997
+    },
+    "29\u00b0C": {
+     "buy_yes": 0.04,
+     "buy_no": 0.977
+    },
+    "30\u00b0C": {
+     "buy_yes": 0.23,
+     "buy_no": 0.79
+    },
+    "31\u00b0C": {
+     "buy_yes": 0.43,
+     "buy_no": 0.61
+    },
+    "32\u00b0C": {
+     "buy_yes": 0.27,
+     "buy_no": 0.75
+    },
+    "33\u00b0C": {
+     "buy_yes": 0.08,
+     "buy_no": 0.95
+    },
+    "34\u00b0C": {
+     "buy_yes": 0.02,
+     "buy_no": 0.995
+    },
+    "35\u00b0C": {
+     "buy_yes": 0.019,
+     "buy_no": 0.998
+    },
+    "36\u00b0C or higher": {
+     "buy_yes": 0.018000000000000002,
+     "buy_no": 0.9990000000000001
+    }
+   },
+   "screenshot": "polymarket_2026-10-22.jpg",
+   "error": null
+  },
+  {
+   "target": null,
+   "name": "hko_fnd_page",
+   "url": "https://www.hko.gov.hk/en/wxinfo/currwx/fnd.htm",
+   "ok": true,
+   "values": {
+    "2026-10-21": 33.0,
+    "2026-10-22": 32.0,
+    "2026-10-23": 33.0,
+    "2026-10-24": 32.0,
+    "2026-10-25": 31.0,
+    "2026-10-26": 30.0,
+    "2026-10-27": 30.0,
+    "2026-10-28": 29.0,
+    "2026-10-29": 29.0
+   },
+   "screenshot": "hko_9day.jpg",
+   "error": null
+  },
+  {
+   "target": null,
+   "name": "hko_extract_page",
+   "url": "https://www.hko.gov.hk/en/cis/dailyExtract.htm?y=2026&m=10",
+   "ok": true,
+   "values": {
+    "2026-10-01": 33.6,
+    "2026-10-02": 31.7,
+    "2026-10-03": 29.6,
+    "2026-10-04": 30.6,
+    "2026-10-05": 31.2,
+    "2026-10-06": 28.2,
+    "2026-10-07": 28.8,
+    "2026-10-08": 29.0,
+    "2026-10-09": 30.6,
+    "2026-10-10": 31.1,
+    "2026-10-11": 31.0,
+    "2026-10-12": 31.3,
+    "2026-10-13": 31.0,
+    "2026-10-14": 30.0,
+    "2026-10-15": 29.7,
+    "2026-10-16": 29.8,
+    "2026-10-17": 29.2,
+    "2026-10-18": 31.5,
+    "2026-10-19": 31.9
+   },
+   "screenshot": "hko_daily_extract_2026-10.jpg",
+   "error": null
+  }
+ ],
+ "fallback_used": [],
+ "daily_extract_datafile": {
+  "2026-10-01": 33.6,
+  "2026-10-02": 31.7,
+  "2026-10-03": 29.6,
+  "2026-10-04": 30.6,
+  "2026-10-05": 31.2,
+  "2026-10-06": 28.2,
+  "2026-10-07": 28.8,
+  "2026-10-08": 29.0,
+  "2026-10-09": 30.6,
+  "2026-10-10": 31.1,
+  "2026-10-11": 31.0,
+  "2026-10-12": 31.3,
+  "2026-10-13": 31.0,
+  "2026-10-14": 30.0,
+  "2026-10-15": 29.7,
+  "2026-10-16": 29.8,
+  "2026-10-17": 29.2,
+  "2026-10-18": 31.5,
+  "2026-10-19": 31.9
+ },
+ "xchecks": [
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-21",
+   "feed": 33.0,
+   "page": 33.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-22",
+   "feed": 32.0,
+   "page": 32.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-23",
+   "feed": 33.0,
+   "page": 33.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-24",
+   "feed": 32.0,
+   "page": 32.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-25",
+   "feed": 31.0,
+   "page": 31.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-26",
+   "feed": 30.0,
+   "page": 30.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-27",
+   "feed": 30.0,
+   "page": 30.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-28",
+   "feed": 29.0,
+   "page": 29.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page_datafile",
+   "item": "2026-10-29",
+   "feed": 29.0,
+   "page": 29.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-21",
+   "feed": 33.0,
+   "page": 33.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-22",
+   "feed": 32.0,
+   "page": 32.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-23",
+   "feed": 33.0,
+   "page": 33.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-24",
+   "feed": 32.0,
+   "page": 32.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-25",
+   "feed": 31.0,
+   "page": 31.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-26",
+   "feed": 30.0,
+   "page": 30.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-27",
+   "feed": 30.0,
+   "page": 30.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-28",
+   "feed": 29.0,
+   "page": 29.0,
+   "ok": true
+  },
+  {
+   "check": "hko_9day_feed_vs_page",
+   "item": "2026-10-29",
+   "feed": 29.0,
+   "page": 29.0,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-01",
+   "feed": 33.6,
+   "page": 33.6,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-02",
+   "feed": 31.7,
+   "page": 31.7,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-03",
+   "feed": 29.6,
+   "page": 29.6,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-04",
+   "feed": 30.6,
+   "page": 30.6,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-05",
+   "feed": 31.2,
+   "page": 31.2,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-06",
+   "feed": 28.2,
+   "page": 28.2,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-07",
+   "feed": 28.8,
+   "page": 28.8,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-08",
+   "feed": 29.0,
+   "page": 29.0,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-09",
+   "feed": 30.6,
+   "page": 30.6,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-10",
+   "feed": 31.1,
+   "page": 31.1,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-11",
+   "feed": 31.0,
+   "page": 31.0,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-12",
+   "feed": 31.3,
+   "page": 31.3,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-13",
+   "feed": 31.0,
+   "page": 31.0,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-14",
+   "feed": 30.0,
+   "page": 30.0,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-15",
+   "feed": 29.7,
+   "page": 29.7,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-16",
+   "feed": 29.8,
+   "page": 29.8,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-17",
+   "feed": 29.2,
+   "page": 29.2,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-18",
+   "feed": 31.5,
+   "page": 31.5,
+   "ok": true
+  },
+  {
+   "check": "daily_extract_datafile_vs_page",
+   "item": "2026-10-19",
+   "feed": 31.9,
+   "page": 31.9,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "28\u00b0C or below buy_yes",
+   "feed": 0.002,
+   "page": 0.002,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "28\u00b0C or below buy_no",
+   "feed": 0.999,
+   "page": 0.9990000000000001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "29\u00b0C buy_yes",
+   "feed": 0.004,
+   "page": 0.004,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "29\u00b0C buy_no",
+   "feed": 0.999,
+   "page": 0.9990000000000001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "30\u00b0C buy_yes",
+   "feed": 0.01,
+   "page": 0.01,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "30\u00b0C buy_no",
+   "feed": 0.994,
+   "page": 0.9940000000000001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "31\u00b0C buy_yes",
+   "feed": 0.079,
+   "page": 0.079,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "31\u00b0C buy_no",
+   "feed": 0.929,
+   "page": 0.929,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "32\u00b0C buy_yes",
+   "feed": 0.43,
+   "page": 0.43,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "32\u00b0C buy_no",
+   "feed": 0.59,
+   "page": 0.59,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "33\u00b0C buy_yes",
+   "feed": 0.44,
+   "page": 0.44,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "33\u00b0C buy_no",
+   "feed": 0.6,
+   "page": 0.58,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "34\u00b0C buy_yes",
+   "feed": 0.08,
+   "page": 0.08,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "34\u00b0C buy_no",
+   "feed": 0.93,
+   "page": 0.93,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "35\u00b0C buy_yes",
+   "feed": 0.004,
+   "page": 0.004,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "35\u00b0C buy_no",
+   "feed": 0.997,
+   "page": 0.997,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "36\u00b0C buy_yes",
+   "feed": 0.001,
+   "page": 0.001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "37\u00b0C buy_yes",
+   "feed": 0.001,
+   "page": 0.001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-21",
+   "item": "38\u00b0C or higher buy_yes",
+   "feed": 0.001,
+   "page": 0.001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "26\u00b0C or below buy_yes",
+   "feed": 0.02,
+   "page": 0.02,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "26\u00b0C or below buy_no",
+   "feed": 0.999,
+   "page": 0.9990000000000001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "27\u00b0C buy_yes",
+   "feed": 0.02,
+   "page": 0.02,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "27\u00b0C buy_no",
+   "feed": 0.999,
+   "page": 0.9990000000000001,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "28\u00b0C buy_yes",
+   "feed": 0.005,
+   "page": 0.005,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "28\u00b0C buy_no",
+   "feed": 0.997,
+   "page": 0.997,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "29\u00b0C buy_yes",
+   "feed": 0.04,
+   "page": 0.04,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "29\u00b0C buy_no",
+   "feed": 0.977,
+   "page": 0.977,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "30\u00b0C buy_yes",
+   "feed": 0.23,
+   "page": 0.23,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "30\u00b0C buy_no",
+   "feed": 0.79,
+   "page": 0.79,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "31\u00b0C buy_yes",
+   "feed": 0.42,
+   "page": 0.43,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "31\u00b0C buy_no",
+   "feed": 0.61,
+   "page": 0.61,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "32\u00b0C buy_yes",
+   "feed": 0.27,
+   "page": 0.27,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "32\u00b0C buy_no",
+   "feed": 0.75,
+   "page": 0.75,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "33\u00b0C buy_yes",
+   "feed": 0.08,
+   "page": 0.08,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "33\u00b0C buy_no",
+   "feed": 0.95,
+   "page": 0.95,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "34\u00b0C buy_yes",
+   "feed": 0.02,
+   "page": 0.02,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "34\u00b0C buy_no",
+   "feed": 0.995,
+   "page": 0.995,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "35\u00b0C buy_yes",
+   "feed": 0.019,
+   "page": 0.019,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "35\u00b0C buy_no",
+   "feed": 0.998,
+   "page": 0.998,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "36\u00b0C or higher buy_yes",
+   "feed": 0.018,
+   "page": 0.018000000000000002,
+   "ok": true
+  },
+  {
+   "check": "polymarket_api_vs_page_2026-10-22",
+   "item": "36\u00b0C or higher buy_no",
+   "feed": 0.999,
+   "page": 0.9990000000000001,
+   "ok": true
+  }
+ ],
+ "status": {
+  "hko_9day_feed": "ok",
+  "hko_9day_page_datafile": "ok",
+  "model_ecmwf": "ok",
+  "model_gfs": "ok",
+  "model_icon": "ok",
+  "hko_max_since_midnight": "ok",
+  "hko_current_temp": "ok",
+  "market_2026-10-21": "ok",
+  "market_2026-10-22": "ok"
+ }
+}
