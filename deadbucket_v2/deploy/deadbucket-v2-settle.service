@@ -1,0 +1,10 @@
+[Unit]
+Description=dead-bucket v2: settle paper decisions against resolved markets
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/deadbucket_v2
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v2 settle
+StandardOutput=append:/home/ubuntupolymarket3/deadbucket_v2/logs/settle.log
+StandardError=append:/home/ubuntupolymarket3/deadbucket_v2/logs/settle.log

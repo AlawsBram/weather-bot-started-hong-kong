@@ -1,0 +1,20 @@
+[Unit]
+Description=dead-bucket v2 (many cities) - DRY RUN loop, public data, no keys
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/deadbucket_v2
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v2 run --mode dry
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=20
+Nice=5
+MemoryMax=400M
+StandardOutput=append:/home/ubuntupolymarket3/deadbucket_v2/logs/bot.log
+StandardError=append:/home/ubuntupolymarket3/deadbucket_v2/logs/bot.log
+
+[Install]
+WantedBy=multi-user.target

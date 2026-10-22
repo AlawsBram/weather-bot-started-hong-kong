@@ -120,7 +120,8 @@ def alert(key: str, text: str, cls: str = "warn") -> bool:
         _log(f"CAPPED {key}: {text[:160]}")
         _save(st)
         return False
-    prefix = "🌡️ HK weather bot" if cls == "report" else "⚠️ HK weather bot"
+    prefix = ("🌡️ HK weather bot v1 (forecast models vs market price, paper)" if cls == "report"
+              else "⚠️ HK weather bot v1")
     ok, detail = send_telegram(f"{prefix}\n{text}")
     st["last"][key] = now
     if cls != "report":

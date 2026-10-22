@@ -1,0 +1,10 @@
+[Unit]
+Description=HK dead-bucket v3: reconcile
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_deadbucket_v3
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 reconcile
+StandardOutput=append:/home/ubuntupolymarket3/hk_deadbucket_v3/logs/reconcile.log
+StandardError=append:/home/ubuntupolymarket3/hk_deadbucket_v3/logs/reconcile.log

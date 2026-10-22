@@ -1,0 +1,11 @@
+HK dead-bucket test 2026-04-15..2026-10-20: 567 bucket kills
+  YES price of the killed bucket at T-10 min: median 0.8c, mean 7.6c, >=3c in 195/566
+  YES price of the killed bucket at T+0 min: median 0.2c, mean 1.4c, >=3c in 46/566
+  YES price of the killed bucket at T+1 min: median 0.1c, mean 0.3c, >=3c in 5/566
+  YES price of the killed bucket at T+2 min: median 0.1c, mean 0.3c, >=3c in 4/566
+  YES price of the killed bucket at T+5 min: median 0.1c, mean 0.2c, >=3c in 3/566
+  YES price of the killed bucket at T+10 min: median 0.1c, mean 0.1c, >=3c in 2/566
+  YES price of the killed bucket at T+30 min: median 0.1c, mean 0.1c, >=3c in 1/566
+  buy NO 1 min after it is public, hold: 564 trades, avg profit -0.74c/share, lost 0
+  only when NO <= 97c: 1 trades, avg profit +25.04c/share
+  days where the official max came out BELOW the since-midnight reading: 0 []

@@ -1,0 +1,20 @@
+[Unit]
+Description=HK live recorder: when each HKO source publishes each Observatory reading (read-only, no keys)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_live_recorder
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python /home/ubuntupolymarket3/hk_live_recorder/recorder.py
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=20
+Nice=5
+MemoryMax=300M
+StandardOutput=append:/home/ubuntupolymarket3/hk_live_recorder/logs/recorder.log
+StandardError=append:/home/ubuntupolymarket3/hk_live_recorder/logs/recorder.log
+
+[Install]
+WantedBy=multi-user.target

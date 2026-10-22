@@ -1,0 +1,19 @@
+Bilberry forecast-change rule on Hong Kong, 2026-04-15..2026-10-20 (187 settled markets)
+public delay ECMWF 7.8h, GFS 6.4h, +0.0h extra, +5 min reaction
+
+[ALL] trades 380, won 92 (24.2%) vs average price paid 23.9c
+   hold to settlement: P&L $-510.25 on $9,500 staked (ROI -5.4%)
+   sell after 3 h:     P&L $-1,037.30 on 380 trades
+   price drift in the 3 h after buying: mean +1.02c, median +0.50c, up 199 / down 143
+
+[ECMWF] trades 219, won 55 (25.1%) vs average price paid 23.2c
+   hold to settlement: P&L $-118.03 on $5,475 staked (ROI -2.2%)
+   sell after 3 h:     P&L $-540.70 on 219 trades
+   price drift in the 3 h after buying: mean +1.23c, median +0.50c, up 118 / down 82
+
+[GFS] trades 161, won 37 (23.0%) vs average price paid 24.7c
+   hold to settlement: P&L $-392.22 on $4,025 staked (ROI -9.7%)
+   sell after 3 h:     P&L $-496.60 on 161 trades
+   price drift in the 3 h after buying: mean +0.72c, median +0.10c, up 81 / down 61
+
+by month (hold): 2026-04 29t $+292, 2026-05 51t $+294, 2026-06 64t $-437, 2026-07 76t $-273, 2026-08 94t $-184, 2026-09 44t $-226, 2026-10 22t $+23

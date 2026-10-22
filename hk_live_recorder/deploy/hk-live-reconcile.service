@@ -1,0 +1,12 @@
+[Unit]
+Description=HK live recorder: daily speed + official-max match check (read-only)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_live_recorder
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python /home/ubuntupolymarket3/hk_live_recorder/reconcile.py
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=append:/home/ubuntupolymarket3/hk_live_recorder/logs/reconcile.log
+StandardError=append:/home/ubuntupolymarket3/hk_live_recorder/logs/reconcile.log

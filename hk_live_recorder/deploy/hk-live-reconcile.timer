@@ -1,0 +1,9 @@
+[Unit]
+Description=HK live recorder: daily check at 10:00 HKT (after HKO's 01:30 daily report)
+
+[Timer]
+OnCalendar=*-*-* 10:00:00 Asia/Hong_Kong
+Persistent=true
+
+[Install]
+WantedBy=timers.target
