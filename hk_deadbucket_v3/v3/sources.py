@@ -11,6 +11,10 @@ from . import config
 HKT = timezone(timedelta(hours=8))
 SOURCES = {
     "text_hko": "https://www.hko.gov.hk/textonly/v2/forecast/text_readings_e.htm",
+    # same page, but every poll bypasses the CDN cache (no conditional headers, no-cache, unique query string).
+    # Added 2026-10-23: our conditional polls got "304 not modified" for 20-28 s after the page's own
+    # Last-Modified while other bots traded 14-20 s after it. This measures whether the cache is the gap.
+    "text_nocache": "https://www.hko.gov.hk/textonly/v2/forecast/text_readings_e.htm",
     "text_wx": "https://www.weather.gov.hk/wxinfo/ts/text_readings_e.htm",
     "csv_maxmin": "https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_since_midnight_maxmin.csv",
     "csv_1min": "https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv",

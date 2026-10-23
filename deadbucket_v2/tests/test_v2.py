@@ -82,7 +82,7 @@ def test_rules_other_styles_not_traded():
     bad = rules.parse_event({"slug": "highest-temperature-in-x-on-october-24-2026",
                              "resolutionSource": "https://aviationweather.gov/api/data/metar?ids=KXXX&format=raw&date=2026-10-25T07:00:00Z&hours=30",
                              "description": "reported at Some Airport (KYYY)", "markets": [{"groupItemTitle": "9°C", "id": "1", "conditionId": "", "clobTokenIds": '["1","2"]'}]})
-    assert not bad.supported and "differs" in bad.problems[0]
+    assert not bad.supported and any("differs" in x for x in bad.problems)
 
 
 def test_station_table_change(tmp_path):
@@ -95,3 +95,43 @@ def test_station_table_change(tmp_path):
                             "description": "(KBBB)", "markets": [{"groupItemTitle": "9°C", "id": "1", "conditionId": "", "clobTokenIds": '["1","2"]'}]})
     ch = rules.update_station_table([e2], p)
     assert ch and "wu/KAAA -> metar/KBBB" in ch[0]
+
+
+# --- day window: local midnight in the station's zone; the rules URL is only a cross-check ----------
+def _metar_event(slug, url):
+    icao = url.split("ids=")[1][:4]
+    return rules.parse_event({"slug": slug, "resolutionSource": url, "description": f"... reported at the airport ({icao}) ... whole degrees Celsius ...",
+                              "markets": [{"groupItemTitle": "12°C", "id": "1", "conditionId": "0xa", "clobTokenIds": '["1","2"]'}]})
+
+
+def test_window_oct23_convention_hours27():
+    # Oct 23 batch: date = local midnight, hours=27. The old "date - 3 h" code made this 3 h early (the 2026-10-23 bug).
+    e = _metar_event("highest-temperature-in-helsinki-on-october-23-2026",
+                     "https://aviationweather.gov/api/data/metar?ids=EFHK&format=raw&date=2026-10-23T21:00:00Z&hours=27")
+    assert e.window_start == datetime(2026, 10, 22, 21, 0, tzinfo=timezone.utc)
+    assert e.window_end == datetime(2026, 10, 23, 21, 0, tzinfo=timezone.utc)
+    assert e.problems == [] and e.supported
+    # the Helsinki 12.0 C report at 18:20Z on Oct 22 (21:20 local, the day BEFORE) must be outside
+    assert not (e.window_start <= datetime(2026, 10, 22, 18, 20, tzinfo=timezone.utc) < e.window_end)
+
+
+def test_window_oct24_convention_hours30_and_dst_end():
+    e = _metar_event("highest-temperature-in-helsinki-on-october-24-2026",
+                     "https://aviationweather.gov/api/data/metar?ids=EFHK&format=raw&date=2026-10-25T00:00:00Z&hours=30")
+    assert (e.window_start, e.window_end) == (datetime(2026, 10, 23, 21, 0, tzinfo=timezone.utc), datetime(2026, 10, 24, 21, 0, tzinfo=timezone.utc))
+    assert e.problems == []
+    # Oct 25 2026: EU clocks go back, the local day is 25 h long; the rule counts by local date, so the window is 25 h
+    e = _metar_event("highest-temperature-in-helsinki-on-october-25-2026",
+                     "https://aviationweather.gov/api/data/metar?ids=EFHK&format=raw&date=2026-10-26T01:00:00Z&hours=30")
+    assert (e.window_start, e.window_end) == (datetime(2026, 10, 24, 21, 0, tzinfo=timezone.utc), datetime(2026, 10, 25, 22, 0, tzinfo=timezone.utc))
+    assert e.problems == []
+
+
+def test_window_cross_check_flags_mismatch_and_unknown_city():
+    bad = _metar_event("highest-temperature-in-nyc-on-october-24-2026",
+                       "https://aviationweather.gov/api/data/metar?ids=KLGA&format=raw&date=2026-10-24T04:00:00Z&hours=30")
+    assert any("local midnight" in p for p in bad.problems) and not bad.supported
+    unk = _metar_event("highest-temperature-in-atlantis-on-october-24-2026",
+                       "https://aviationweather.gov/api/data/metar?ids=KXYZ&format=raw&date=2026-10-25T07:00:00Z&hours=30")
+    assert any("time zone" in p for p in unk.problems) and not unk.supported
+    assert unk.window_start == datetime(2026, 10, 24, 4, 0, tzinfo=timezone.utc)   # URL-derived fallback, still logged

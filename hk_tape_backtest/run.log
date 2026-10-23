@@ -1,0 +1,47 @@
+markets to fetch: 567
+0/567 2026-04-15 26°C prize $0 t_know 360s
+25/567 2026-04-22 28°C prize $2 t_know 334s
+50/567 2026-04-30 23°C prize $0 t_know 424s
+75/567 2026-05-08 26°C prize $0 t_know 390s
+100/567 2026-05-19 25°C prize $0 t_know s
+125/567 2026-05-27 32°C prize $0 t_know 411s
+150/567 2026-06-02 32°C prize $5 t_know 418s
+175/567 2026-06-09 26°C prize $0 t_know 432s
+200/567 2026-06-20 29°C prize $0 t_know 425s
+225/567 2026-06-29 28°C prize $0 t_know 278s
+250/567 2026-07-05 32°C prize $164 t_know 401s
+275/567 2026-07-12 33°C prize $45 t_know 418s
+300/567 2026-07-24 31°C prize $0 t_know 462s
+325/567 2026-08-05 28°C prize $0 t_know s
+350/567 2026-08-10 34°C prize $132 t_know 432s
+375/567 2026-08-19 29°C prize $0 t_know 1026s
+400/567 2026-08-29 31°C prize $0 t_know 273s
+425/567 2026-09-07 29°C prize $0 t_know 328s
+450/567 2026-09-13 30°C prize $37 t_know 430s
+475/567 2026-09-20 31°C prize $0 t_know 436s
+500/567 2026-09-27 28°C prize $0 t_know s
+525/567 2026-10-04 27°C prize $0 t_know s
+550/567 2026-10-14 29°C prize $61 t_know 419s
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket first-mover prize from the trade tape
+
+kills: 567 (0 without a market)
+prize taken by first movers (NO bought <= 97c after the stamp, valued at 99.9c): total $23,209, median per kill $0.00, mean $40.93
+kills with prize >= $10: 114   >= $50: 73   >= $200: 28
+per calendar day: median $14, mean $137 over 169 days
+time from the HKO stamp to the market 'knowing' (first trade at NO >= 98.5c): median 7.0 min, p10 4.4, p90 8.0  (n=474)
+time from the stamp to the first sweep trade: median 4.4 min (n=167)
+time from the stamp to HKO's public file in the archive: median 8.0 min
+
+top wallets by $ taken (name, wallet, $, kills where they were the top taker):
+  Tan-Humor                0x2662228cdc5e641db1a64ff9a8bd1704ad4a40b7  $1,994  top in 19 kills
+  Anxious-Dwelling         0x100a50d9f27bc1a884f8a47accad209a9188c6ce  $1,744  top in 1 kills
+  Attractive-Position      0xb98c83f1c9bc913600b0930a98402f6681688f64  $1,535  top in 14 kills
+  Fabulous-Skean           0x3d3ca331c493bed9208e242af7589ff73ef415ed  $1,378  top in 11 kills
+  Beloved-Contract-Domain  0x81300a0a80718398f9ab90db00d4b85a76245a50  $1,248  top in 7 kills
+  Relieved-Storyboard      0x592d542d25d999f8a606359594b58a4bcb3f4b16  $979  top in 11 kills
+  Cultured-Guide           0x35bc8b057201f0b787d8ffb7398b3df0831b70de  $856  top in 2 kills
+  Euphoric-Entirety        0x116db6298abcdefe06f9f5458c293c7de185fbf1  $635  top in 6 kills
+  Fine-Passive-Cufflink    0x1a9cfddd25dfa4f5b99f39bb928fdaed4e6a079d  $525  top in 5 kills
+  Emotional-Overflight-Geology 0x47e836e0788f9a14f2879d02130782f2569daa81  $463  top in 5 kills
+  Advanced-Metabolite      0xcf4dab1c7fe0ef23dca42bdfd857dd3c5cbccb2d  $232  top in 2 kills
+  Funny-Centre             0x64902205dda79a6a031f7817c9c42a0b0adf687f  $180  top in 1 kills

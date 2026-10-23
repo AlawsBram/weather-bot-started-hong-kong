@@ -16,8 +16,9 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -31,8 +32,45 @@ METAR_URL_RE = re.compile(r"aviationweather\.gov/api/data/metar\?ids=([A-Z0-9]{4
 ICAO_IN_TEXT_RE = re.compile(r"\(([A-Z][A-Z0-9]{3})\)")
 NOAA_RE = re.compile(r"weather\.gov/wrh/timeseries\?site=([a-z0-9]{3,4})", re.I)
 WU_RE = re.compile(r"wunderground\.com/history/daily/[^\s]*/([A-Z0-9]{3,4})\b")
-# the rules URL's `date` is local midnight (end of the observation day) + 3 h
-METAR_URL_AFTER_MIDNIGHT = timedelta(hours=3)
+# The day window. The rule text says an observation counts if its LOCAL time stamp falls on the
+# observation date (DST included), so the window is local midnight -> next local midnight in the
+# station's own time zone (CITY_TZ). The rules URL is only a cross-check, because its convention
+# has already changed once: Oct 23 2026 markets say `date=<local midnight>&hours=27`, Oct 24+
+# say `date=<local midnight + 3 h>&hours=30`. In both, the covered span starts 3 h before the day:
+# window_start = date - hours + 3 h. (A fixed "date - 3 h" was wrong for the Oct 23 batch and
+# counted the previous evening's readings for the next day - found 2026-10-23.)
+METAR_URL_LEAD_HOURS = 3
+METAR_URL_HOURS_SEEN = (27, 30)
+CITY_TZ = {
+    "amsterdam": "Europe/Amsterdam", "ankara": "Europe/Istanbul", "atlanta": "America/New_York",
+    "austin": "America/Chicago", "beijing": "Asia/Shanghai", "buenos-aires": "America/Argentina/Buenos_Aires",
+    "busan": "Asia/Seoul", "cape-town": "Africa/Johannesburg", "chengdu": "Asia/Shanghai",
+    "chicago": "America/Chicago", "chongqing": "Asia/Shanghai", "dallas": "America/Chicago",
+    "denver": "America/Denver", "guangzhou": "Asia/Shanghai", "helsinki": "Europe/Helsinki",
+    "hong-kong": "Asia/Hong_Kong", "houston": "America/Chicago", "istanbul": "Europe/Istanbul",
+    "jeddah": "Asia/Riyadh", "jinan": "Asia/Shanghai", "karachi": "Asia/Karachi",
+    "kuala-lumpur": "Asia/Kuala_Lumpur", "london": "Europe/London", "los-angeles": "America/Los_Angeles",
+    "lucknow": "Asia/Kolkata", "madrid": "Europe/Madrid", "manila": "Asia/Manila",
+    "mexico-city": "America/Mexico_City", "miami": "America/New_York", "milan": "Europe/Rome",
+    "moscow": "Europe/Moscow", "munich": "Europe/Berlin", "nyc": "America/New_York",
+    "panama-city": "America/Panama", "paris": "Europe/Paris", "qingdao": "Asia/Shanghai",
+    "san-francisco": "America/Los_Angeles", "sao-paulo": "America/Sao_Paulo", "seattle": "America/Los_Angeles",
+    "seoul": "Asia/Seoul", "shanghai": "Asia/Shanghai", "shenzhen": "Asia/Shanghai",
+    "singapore": "Asia/Singapore", "taipei": "Asia/Taipei", "tel-aviv": "Asia/Jerusalem",
+    "tokyo": "Asia/Tokyo", "toronto": "America/Toronto", "warsaw": "Europe/Warsaw",
+    "wellington": "Pacific/Auckland", "wuhan": "Asia/Shanghai", "zhengzhou": "Asia/Shanghai",
+}
+
+
+def local_day_window(city: str, day: date) -> tuple[datetime, datetime] | None:
+    """[local midnight of `day`, local midnight of the next day) in UTC, or None if the city's zone is unknown."""
+    tz = CITY_TZ.get(city)
+    if not tz:
+        return None
+    z = ZoneInfo(tz)
+    start = datetime.combine(day, time(0), tzinfo=z).astimezone(timezone.utc)
+    end = datetime.combine(day + timedelta(days=1), time(0), tzinfo=z).astimezone(timezone.utc)
+    return start, end
 
 
 @dataclass
@@ -99,8 +137,20 @@ def parse_event(e: dict) -> Event | None:
     if um:
         ev.style = "metar"
         ev.icao = um.group(1)
-        end = datetime.strptime(um.group(2), "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc) - METAR_URL_AFTER_MIDNIGHT
-        ev.window_end, ev.window_start = end, end - timedelta(hours=24)
+        url_date = datetime.strptime(um.group(2), "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+        hours = int(um.group(3))
+        url_start = url_date - timedelta(hours=hours - METAR_URL_LEAD_HOURS)
+        if hours not in METAR_URL_HOURS_SEEN:
+            ev.problems.append(f"rules URL hours={hours} is new (seen {METAR_URL_HOURS_SEEN}); window convention unknown")
+        local = local_day_window(city, day)
+        if local is None:
+            ev.window_start, ev.window_end = url_start, url_start + timedelta(hours=24)
+            ev.problems.append(f"no time zone known for city '{city}'; add it to CITY_TZ")
+        else:
+            ev.window_start, ev.window_end = local
+            if abs((url_start - ev.window_start).total_seconds()) > 3600:
+                ev.problems.append(f"rules URL implies day start {url_start:%Y-%m-%dT%H:%MZ} but local midnight is "
+                                   f"{ev.window_start:%Y-%m-%dT%H:%MZ} ({CITY_TZ[city]})")
         named = set(ICAO_IN_TEXT_RE.findall(e.get("description") or ""))
         if named and ev.icao not in named:
             ev.problems.append(f"station in URL {ev.icao} differs from station named in text {sorted(named)}")

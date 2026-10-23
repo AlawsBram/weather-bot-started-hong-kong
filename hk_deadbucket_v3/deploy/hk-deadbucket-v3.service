@@ -1,5 +1,5 @@
 [Unit]
-Description=HK dead-bucket v3 (paper): HKO text-page trigger, dead buckets -> NO; public data, no keys
+Description=HK dead-bucket v3: HKO text-page trigger, dead buckets -> NO (mode from deploy/.env V3_MODE, default dry)
 After=network-online.target
 Wants=network-online.target
 
@@ -7,8 +7,10 @@ Wants=network-online.target
 Type=simple
 User=ubuntupolymarket3
 WorkingDirectory=/home/ubuntupolymarket3/hk_deadbucket_v3
-ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 run --mode dry
+EnvironmentFile=-/home/ubuntupolymarket3/hk_deadbucket_v3/deploy/.env
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 run --mode ${V3_MODE}
 Environment=PYTHONUNBUFFERED=1
+Environment=V3_MODE=dry
 Restart=always
 RestartSec=20
 Nice=5

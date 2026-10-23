@@ -8,3 +8,4 @@
 KILL
 __pycache__/
 hk_weather_bot/data/history/cache/
+**/cache/

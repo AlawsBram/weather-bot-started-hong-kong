@@ -73,13 +73,18 @@ class Bot:
     # ---------------- polling ----------------
     def poll(self, src: str, url: str):
         h = {}
-        if src in self.etag:
-            h["If-None-Match"] = self.etag[src]
-        if src in self.lastmod:
-            h["If-Modified-Since"] = self.lastmod[src]
+        params = None
+        if src == "text_nocache":
+            h = {"Cache-Control": "no-cache", "Pragma": "no-cache"}
+            params = {"_": int(time.time() * 1000)}      # unique URL each poll -> the CDN cannot serve a cached copy
+        else:
+            if src in self.etag:
+                h["If-None-Match"] = self.etag[src]
+            if src in self.lastmod:
+                h["If-Modified-Since"] = self.lastmod[src]
         t0 = time.time()
         try:
-            r = self.sess[src].get(url, headers=h, timeout=10)
+            r = self.sess[src].get(url, headers=h, params=params, timeout=10)
             status = r.status_code
         except requests.RequestException as e:
             self.err_since.setdefault(src, t0)
@@ -260,5 +265,6 @@ class Bot:
                 alerts.alert(f"daily_{today}", f"daily: {self.stats['kills']} dead buckets yesterday, {self.stats['polls']} polls. "
                                               f"v3 = {config.DESCRIPTION[:120]}...", dedup_hours=20)
                 self.stats = {"kills": 0, "polls": 0}
+                self.exe.orders_today = 0          # the live daily order cap counts per HKT day
                 last_day = today
             time.sleep(5)

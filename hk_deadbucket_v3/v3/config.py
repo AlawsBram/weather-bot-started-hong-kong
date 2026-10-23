@@ -27,6 +27,6 @@ PROBE_SHARES = float(os.environ.get("V3_PROBE_SHARES", "5"))
 # polling (HKT). HKO stamps every 10 min and publishes 7:15-8:45 later (measured 2026-10-22).
 DAY_START, DAY_END = 6.5, 20.5
 WINDOW_FROM, WINDOW_TO = 5.5, 9.75          # minutes after each 10-min stamp: fast polling
-FAST_INTERVAL = {"text_hko": 2, "text_wx": 10, "csv_maxmin": 10, "csv_1min": 10, "rhrread": 30}
+FAST_INTERVAL = {"text_hko": 2, "text_nocache": 2, "text_wx": 10, "csv_maxmin": 10, "csv_1min": 10, "rhrread": 30}
 OUTSIDE_INTERVAL, NIGHT_INTERVAL = 20, 60
 STALL_MIN = 25

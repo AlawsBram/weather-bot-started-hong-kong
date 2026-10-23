@@ -23,3 +23,11 @@ Kill switch: a file named `KILL` in this folder. Probe/live need `deploy/.env` (
 
 VM: twapvm `~/hk_deadbucket_v3`, runs on `~/hkbot/.venv`; services `hk-deadbucket-v3`, `hk-deadbucket-v3-settle.timer` (6 h),
 `hk-deadbucket-v3-reconcile.timer` (10:00 HKT). It replaced the standalone `hk_live_recorder` (same measurements, no duplicate polling).
+
+## Going live ($10 test) - the user does this, not the assistant
+1. `cp deploy/.env.example deploy/.env && chmod 600 deploy/.env`, then append the three POLY_* lines from an existing bot env on the VM
+   (e.g. `grep -E "^POLY_(PRIVATE_KEY|FUNDER|SIGNATURE_TYPE)=" ~/s1_harness/.env >> deploy/.env`). Nothing is printed.
+2. Probe first (no money): set `V3_MODE=probe`, `sudo systemctl restart hk-deadbucket-v3`; the next kill posts a 50c x 5 NO bid, reads it back and cancels; the Telegram kill message shows the exchange's answer.
+3. Live: set `V3_MODE=live` and `LIVE_TRADING=1`, restart. Each kill with NO <= 97c on the book sends ONE fill-or-kill buy of up to $10 (caps in .env); a miss costs nothing, a fill costs ~5c in fees.
+4. Stop: `touch KILL` (no more orders, polling continues) or set `V3_MODE=dry` and restart.
+Order library: `py_clob_client_v2` must import in `~/hkbot/.venv` (installed 2026-10-23).
