@@ -50,3 +50,43 @@ def test_killed_by_uses_exclusive_upper_edge(monkeypatch):
     assert [m.label for m in market.killed_by(ms, 27)] == ["26°C or below"]
     assert market.killed_by(ms, 37) == []                               # the top bucket never dies
     assert market.containing(ms, 30).label == "30°C"
+
+
+# --- live order path against a fake exchange client: call shapes must match the v2 library -------------
+def test_executor_live_path_with_fake_client(monkeypatch):
+    import sys, types
+    calls = []
+
+    class FakeClient:
+        def get_tick_size(self, tok): calls.append(("tick", tok)); return "0.001"
+        def get_neg_risk(self, tok): calls.append(("neg", tok)); return True
+        def create_order(self, args, options=None):
+            calls.append(("create", args.token_id, args.price, args.size, args.side, options.tick_size, options.neg_risk))
+            return {"signed": True, "price": args.price, "size": args.size}
+        def post_order(self, order, order_type="GTC", post_only=False):
+            calls.append(("post", order["price"], order["size"], str(order_type), post_only)); return {"orderID": "abc", "status": "matched"}
+        def get_order(self, oid): calls.append(("get", oid)); return {"id": oid}
+        def cancel_order(self, oid): calls.append(("cancel", oid)); return {"canceled": [oid]}
+
+    class OrderArgs:
+        def __init__(self, token_id, price, size, side): self.token_id, self.price, self.size, self.side = token_id, price, size, side
+    fake = types.ModuleType("py_clob_client_v2"); fake.OrderArgs = OrderArgs
+    fake.OrderType = types.SimpleNamespace(FOK="FOK", GTC="GTC")
+    ct = types.ModuleType("py_clob_client_v2.clob_types")
+    class PartialCreateOrderOptions:
+        def __init__(self, tick_size=None, neg_risk=None): self.tick_size, self.neg_risk = tick_size, neg_risk
+    ct.PartialCreateOrderOptions = PartialCreateOrderOptions
+    ob = types.ModuleType("py_clob_client_v2.order_builder"); consts = types.ModuleType("py_clob_client_v2.order_builder.constants"); consts.BUY = "BUY"
+    for name, mod in {"py_clob_client_v2": fake, "py_clob_client_v2.clob_types": ct, "py_clob_client_v2.order_builder": ob, "py_clob_client_v2.order_builder.constants": consts}.items():
+        monkeypatch.setitem(sys.modules, name, mod)
+    from v3.execution import Executor
+    ex = Executor("dry"); ex.mode = "live"; ex.client = FakeClient()
+    a = ex.prearm("TOK", "31C", 0.97, 10.3)
+    assert a["signed"] and calls[0][0] == "tick" and calls[2][0] == "create" and calls[2][5] == "0.001"
+    r = ex.fire("TOK", 0.90, 11.1)                    # armed 0.97 x 10.3 qualifies (price >=, shares <=) -> presigned, one POST
+    assert r["presigned"] and calls[-1] == ("post", 0.97, 10.3, "FOK", False) and ex.orders_today == 1
+    r = ex.fire("TOK", 0.90, 5.0)                     # armed shares 10.3 > 5 -> fresh order, no new tick lookup (cached)
+    assert not r["presigned"] and calls[-2][0] == "create" and calls[-1][1:3] == (0.9, 5.0) and sum(c[0] == "tick" for c in calls) == 1
+    ex.mode = "probe"
+    pr = ex.probe("TOK", 0.5, 5, hold_s=0)
+    assert pr["order_id"] == "abc" and pr["cancel"] == {"canceled": ["abc"]} and calls[-1] == ("cancel", "abc")

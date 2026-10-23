@@ -155,8 +155,13 @@ class Bot:
                 # pre-arm: the favourite is the next bucket to die (when the max reaches whole+1)
                 no_asks, _ = market.book(self.clob, fav.no_token)
                 price = min(config.MAX_NO_PRICE, no_asks[0][0]) if no_asks else config.MAX_NO_PRICE
-                armed = self.exe.prearm(fav.no_token, fav.label, price, max(5.0, config.STAKE_USD / price))
-                row.update(armed_next_kill=armed["label"], armed_no_ask=no_asks[0][0] if no_asks else "")
+                row["armed_no_ask"] = no_asks[0][0] if no_asks else ""
+                try:
+                    armed = self.exe.prearm(fav.no_token, fav.label, price, max(5.0, config.STAKE_USD / price))
+                    row["armed_next_kill"] = armed["label"]
+                except Exception as e:       # noqa: BLE001 - a pre-arm (signing) problem must never block the kill logic below
+                    row["armed_next_kill"] = f"prearm failed: {type(e).__name__}"
+                    log.warning("prearm failed: %s: %s", type(e).__name__, e)
             except (requests.RequestException, ValueError) as e:
                 row["fav_yes_bid"] = type(e).__name__
         with self.lock:
@@ -218,7 +223,7 @@ class Bot:
                     rec["live"] = {"error": f"{type(ex).__name__}: {ex}"[:300]}
         rec["decide_ms"] = round(1000 * (time.time() - t0))
         with config.DECISIONS_FILE.open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps(rec) + "\n")
+            fh.write(json.dumps(rec, default=str) + "\n")
         log.info("KILL %s dead (max %.1f -> %d, published %.0fs after stamp): NO ask %s depth %s sh -> %s",
                  m.label, max_c, deg, rec["publish_lag_s"], rec.get("no_best_ask"), rec.get("no_depth_shares_le_max"),
                  "paper buy" if actionable else "nothing to buy")
@@ -227,7 +232,7 @@ class Bot:
         alerts.alert(f"kill_{day}_{m.label}",
                      f"KILL {day}: {m.label} is dead (HKO max {max_c} at {rec['reading_hkt']}, seen {rec['seen_hkt'][:8]}, "
                      f"{rec['publish_lag_s'] / 60:.1f} min after the stamp). NO ask {rec.get('no_best_ask')}, depth "
-                     f"{rec.get('no_depth_shares_le_max')} sh -> {what}" + (f"\n{self.mode}: {json.dumps(rec.get(self.mode))[:300]}" if self.mode != "dry" else ""),
+                     f"{rec.get('no_depth_shares_le_max')} sh -> {what}" + (f"\n{self.mode}: {json.dumps(rec.get(self.mode), default=str)[:300]}" if self.mode != "dry" else ""),
                      dedup_hours=0)
 
     # ---------------- threads / housekeeping ----------------

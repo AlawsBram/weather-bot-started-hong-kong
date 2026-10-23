@@ -20,6 +20,7 @@ class Executor:
         self.client = None
         self.orders_today = 0
         self.armed: dict | None = None
+        self.opts: dict[str, object] = {}       # token -> PartialCreateOrderOptions (tick size, neg risk), looked up once
         if mode != "dry":
             self._connect()
 
@@ -35,39 +36,47 @@ class Executor:
         creds = ClobClient(host=CLOB_HOST, key=pk, chain_id=137).create_or_derive_api_key()
         self.client = ClobClient(host=CLOB_HOST, key=pk, chain_id=137, creds=creds, signature_type=sig, funder=funder)
 
+    def _options(self, token: str):
+        """Tick size + neg-risk for a token, looked up once (create_order otherwise asks the API every time)."""
+        if token not in self.opts:
+            from py_clob_client_v2.clob_types import PartialCreateOrderOptions
+            self.opts[token] = PartialCreateOrderOptions(tick_size=str(self.client.get_tick_size(token)), neg_risk=bool(self.client.get_neg_risk(token)))
+        return self.opts[token]
+
+    def _build(self, no_token: str, price: float, shares: float):
+        from py_clob_client_v2 import OrderArgs
+        from py_clob_client_v2.order_builder.constants import BUY
+        return self.client.create_order(OrderArgs(token_id=no_token, price=round(price, 3), size=round(shares, 2), side=BUY), self._options(no_token))
+
     def prearm(self, no_token: str, label: str, price: float, shares: float) -> dict:
         """Build (and in live mode sign) the next kill's order now, so the trigger only has to POST."""
         armed = {"label": label, "no_token": no_token, "price": round(price, 3), "shares": round(shares, 2),
                  "armed_at": time.time(), "signed": False}
         if self.mode == "live" and self.client is not None:
-            from py_clob_client_v2 import OrderArgs
-            from py_clob_client_v2.order_builder.constants import BUY
             t0 = time.time()
-            armed["order"] = self.client.create_order(OrderArgs(token_id=no_token, price=armed["price"], size=armed["shares"], side=BUY))
+            armed["order"] = self._build(no_token, armed["price"], armed["shares"])
             armed["signed"], armed["sign_ms"] = True, round(1000 * (time.time() - t0), 2)
         self.armed = armed
         return armed
 
     def fire(self, no_token: str, price: float, shares: float) -> dict:
         """LIVE: fill-or-kill taker buy of NO; uses the pre-signed order if it matches."""
-        from py_clob_client_v2 import OrderArgs, OrderType
-        from py_clob_client_v2.order_builder.constants import BUY
+        from py_clob_client_v2 import OrderType
         t0 = time.time()
         a = self.armed
         if a and a.get("signed") and a["no_token"] == no_token and a["price"] >= price and a["shares"] <= shares:
             order, pre = a["order"], True
         else:
-            order, pre = self.client.create_order(OrderArgs(token_id=no_token, price=round(price, 3), size=round(shares, 2), side=BUY)), False
+            order, pre = self._build(no_token, price, shares), False
         resp = self.client.post_order(order, order_type=OrderType.FOK)
         self.orders_today += 1
         return {"ms": round(1000 * (time.time() - t0)), "presigned": pre, "resp": resp}
 
     def probe(self, no_token: str, price: float, shares: float, hold_s: float = 3.0) -> dict:
         """Prove the path without buying: post-only bid far below market, read it back, cancel."""
-        from py_clob_client_v2 import OrderArgs, OrderType
-        from py_clob_client_v2.order_builder.constants import BUY
+        from py_clob_client_v2 import OrderType
         t0 = time.time()
-        order = self.client.create_order(OrderArgs(token_id=no_token, price=round(price, 3), size=round(shares, 2), side=BUY))
+        order = self._build(no_token, price, shares)
         resp = self.client.post_order(order, order_type=OrderType.GTC, post_only=True)
         posted_ms = round(1000 * (time.time() - t0))
         oid = (resp or {}).get("orderID") or (resp or {}).get("id")
@@ -79,7 +88,7 @@ class Executor:
             except Exception as e:      # noqa: BLE001
                 seen = f"get_order failed: {type(e).__name__}"
             try:
-                cancel = self.client.cancel(oid)
+                cancel = self.client.cancel_order(oid)      # v2 library: cancel_order (there is no .cancel)
             except Exception as e:      # noqa: BLE001
                 cancel = f"cancel failed: {type(e).__name__}"
         return {"posted_ms": posted_ms, "post_resp": resp, "order_id": oid, "seen_on_exchange": seen, "cancel": cancel}
