@@ -1,0 +1,93 @@
+# backtest from 2026-10-23 to 2026-04-15 - HK liquidity reward farming net of pick-offs
+events 169 (2026-04-15..2026-10-20), complete calendar days 151 (2026-04-15..2026-10-19); all $ below are over complete days
+model: 2-sided quotes in every bucket from day-1 00:00 HKT until 23:59 HKT of the event day; reward = pool/1440 * Qmin/(Qmin+C) per quoted minute;
+       pool $100/event/day on the 3 buckets with the highest YES price at 00:00 HKT of the event day, split [50, 25, 25] (ASSUMPTION, see md);
+       untradeable if mid<0.02 or >0.98; pick-off = next 1-min mid crosses our order, marked at the new mid (mtm) or held to resolution (hold)
+data checks: {'markets': 1859, 'winner_among_3_rewarded': 150, 'markets_with_trade_tape': 567, 'kills_using_fallback_t_know': 93, 'markets_with_sparse_prices(<100 pts)': 11, 'pool_pick_used_first_price_of_day': 22}
+
+## HEADLINE (base: 20 shares each side, 1c off mid, mark-to-new-mid, $100 pool on 3 buckets)
+base                               C= 20: reward $ 8301.92  pick-off loss $30853.15  NET $-22551.23  = $-149.35/day  median $-135.05/day  days net>0 1/151 (1%)  worst day $-674.03 (2026-05-20)  pick-offs 135336
+base                               C= 45: reward $ 4591.78  pick-off loss $30853.15  NET $-26261.37  = $-173.92/day  median $-160.28/day  days net>0 1/151 (1%)  worst day $-692.39 (2026-05-20)  pick-offs 135336
+base                               C=200: reward $ 1218.78  pick-off loss $30853.15  NET $-29634.37  = $-196.25/day  median $-182.12/day  days net>0 0/151 (0%)  worst day $-709.08 (2026-05-20)  pick-offs 135336
+reward per $100 of event pool/day (C=45): $30.41/day; quoted minutes 1,669,322 of which in a rewarded bucket 1,022,682; max pool reachable $23752.00
+fee column (0.05*p*(1-p) per filled share, charged to TAKERS, so our cost is $0): would be $22836.99 in total
+
+## Held-to-resolution instead of marking at the new mid (base config)
+base, hold to resolution           C= 20: reward $ 8301.92  pick-off loss $23543.28  NET $-15241.36  = $-100.94/day  median $-104.50/day  days net>0 43/151 (28%)  worst day $-680.60 (2026-04-29)  pick-offs 135336
+base, hold to resolution           C= 45: reward $ 4591.78  pick-off loss $23543.28  NET $-18951.50  = $-125.51/day  median $-127.71/day  days net>0 33/151 (22%)  worst day $-702.20 (2026-04-29)  pick-offs 135336
+base, hold to resolution           C=200: reward $ 1218.78  pick-off loss $23543.28  NET $-22324.50  = $-147.84/day  median $-148.76/day  days net>0 26/151 (17%)  worst day $-721.90 (2026-04-29)  pick-offs 135336
+
+## Sensitivities (mark-to-mid)
+2c off mid, 20 sh                  C= 20: reward $ 4938.02  pick-off loss $18263.26  NET $-13325.24  = $-88.25/day  median $-78.83/day  days net>0 6/151 (4%)  worst day $-490.15 (2026-05-20)  pick-offs 48351
+2c off mid, 20 sh                  C= 45: reward $ 2491.35  pick-off loss $18263.26  NET $-15771.91  = $-104.45/day  median $-95.94/day  days net>0 1/151 (1%)  worst day $-502.26 (2026-05-20)  pick-offs 48351
+2c off mid, 20 sh                  C=200: reward $  612.17  pick-off loss $18263.26  NET $-17651.09  = $-116.89/day  median $-109.11/day  days net>0 0/151 (0%)  worst day $-511.56 (2026-05-20)  pick-offs 48351
+1c off mid, 10 sh                  C= 20: reward $ 5042.20  pick-off loss $15426.57  NET $-10384.37  = $-68.77/day  median $-61.36/day  days net>0 5/151 (3%)  worst day $-332.61 (2026-05-20)  pick-offs 135336
+1c off mid, 10 sh                  C= 45: reward $ 2545.83  pick-off loss $15426.57  NET $-12880.75  = $-85.30/day  median $-78.59/day  days net>0 1/151 (1%)  worst day $-344.96 (2026-05-20)  pick-offs 135336
+1c off mid, 10 sh                  C=200: reward $  625.76  pick-off loss $15426.57  NET $-14800.81  = $-98.02/day  median $-90.95/day  days net>0 0/151 (0%)  worst day $-354.46 (2026-05-20)  pick-offs 135336
+1c, size = market rewardsMinSize   C= 20: reward $13441.04  pick-off loss $81662.43  NET $-68221.38  = $-451.80/day  median $-416.09/day  days net>0 1/151 (1%)  worst day $-1720.53 (2026-05-20)  pick-offs 135336
+1c, size = market rewardsMinSize   C= 45: reward $ 9052.52  pick-off loss $81662.43  NET $-72609.90  = $-480.86/day  median $-448.74/day  days net>0 1/151 (1%)  worst day $-1743.85 (2026-05-20)  pick-offs 135336
+1c, size = market rewardsMinSize   C=200: reward $ 3091.43  pick-off loss $81662.43  NET $-78571.00  = $-520.34/day  median $-487.12/day  days net>0 0/151 (0%)  worst day $-1773.80 (2026-05-20)  pick-offs 135336
+OLD pool shape $200 rank 53/50/46.. C= 20: reward $12866.09  pick-off loss $30853.15  NET $-17987.06  = $-119.12/day  median $-101.96/day  days net>0 7/151 (5%)  worst day $-626.28 (2026-05-20)  pick-offs 135336
+OLD pool shape $200 rank 53/50/46.. C= 45: reward $ 7111.54  pick-off loss $30853.15  NET $-23741.61  = $-157.23/day  median $-140.89/day  days net>0 1/151 (1%)  worst day $-665.96 (2026-05-20)  pick-offs 135336
+OLD pool shape $200 rank 53/50/46.. C=200: reward $ 1886.50  pick-off loss $30853.15  NET $-28966.65  = $-191.83/day  median $-177.39/day  days net>0 0/151 (0%)  worst day $-702.06 (2026-05-20)  pick-offs 135336
+tick-level pick-offs (every observed price point, base quotes): 135583 fills, loss $30857.54 (vs 1-min grid $30853.15)
+
+## Trade-tape reality check (only the killed buckets that have a cached tape; fills need a real taker trade through our price)
+type     minutes   rew C45 | mid-move fills  mid loss | tape fills   shares  loss@mid loss@mid-1c loss@hold | NET (tape@mid) NET (tape@mid-1c) NET (tape@hold) NET (mid-move)
+EVE      476,713   1059.72 |         18,461   1952.58 |     15,322  206,502   -377.28     1687.73    534.67 |        1437.01           -628.01          525.05        -892.86
+LIVE      39,833     79.73 |         11,330   5114.79 |     15,888  256,673   1606.02     4172.75   -564.55 |       -1526.29          -4093.02          644.28       -5035.06
+DEAD         150      0.24 |             54     24.91 |         65    1,182      6.83       18.64      4.49 |          -6.59            -18.41           -4.25         -24.67
+FAR      165,460    482.96 |         18,146   3392.31 |     19,854  284,182    343.50     3185.32   1821.81 |         139.46          -2702.36        -1338.85       -2909.35
+ALL      682,156   1622.65 |         47,991  10484.59 |     51,129  748,538   1579.06     9064.45   1796.42 |          43.59          -7441.79         -173.77       -8861.94
+loss@mid = filled shares marked at the next minute's mid (optimistic: nobody exits at mid); loss@mid-1c = same but paying 1c/share to get out; loss@hold = kept to resolution
+   tape@mid     NET per day on those markets: mean $0.29, median $4.08, days net>0 92/150 (61%)
+   tape@mid-1c  NET per day on those markets: mean $-49.61, median $-39.54, days net>0 4/150 (3%)
+   tape@hold    NET per day on those markets: mean $-1.16, median $-10.44, days net>0 63/150 (42%)
+
+## By bucket type (complete days, base config)
+type     minutes  rewarded  maxpool$ |   rew C20   rew C45  rew C200 | pickoffs  loss mtm loss hold |   NET C20   NET C45  NET C200 | days net>0 (C45)
+EVE    1,108,302   638,789  14793.65 |   5157.09   2850.62    756.21 |    42393   4436.56    165.65 |    720.53  -1585.94  -3680.35 | 73/150 (49%)
+LIVE      63,352    35,950    854.41 |    304.77    169.36     45.14 |    21673   9402.49  11797.27 |  -9097.72  -9233.13  -9357.35 | 1/150 (1%)
+DEAD         331        80      1.94 |      0.70      0.39      0.10 |       80     96.76    128.20 |    -96.06    -96.37    -96.66 | 1/45 (2%)
+FAR      497,337   347,863   8102.00 |   2839.36   1571.41    417.32 |    71190  16917.34  11452.16 | -14077.98 -15345.93 -16500.02 | 1/150 (1%)
+maxpool$ = sum over quoted minutes of that bucket's assumed pool/1440 = what a 100% share would earn
+
+## By hour of day (HKT, complete days, base config, C=45)
+hour  minutes   reward pickoffs     loss      NET | per type NET (EVE/LIVE/DEAD/FAR)
+   0   89,548   235.76     4318   399.68  -163.92 |   -9.28  -30.12   -1.15 -123.37
+   1   90,521   234.46     3376   528.17  -293.71 | -130.84  -19.01  -60.95  -82.90
+   2   90,996   232.79     3033   352.72  -119.93 |   13.13  -28.18    0.00 -104.88
+   3   91,318   234.65     2831   311.34   -76.69 |   11.27  -24.77   -8.62  -54.57
+   4   91,172   237.63     3001   482.90  -245.27 | -107.26  -21.90    0.00 -116.12
+   5   90,440   236.96     3175   322.82   -85.86 |   40.48  -20.75    0.00 -105.59
+   6   89,579   238.16     4360   520.87  -282.71 |   29.82  -50.89    0.00 -261.64
+   7   88,191   238.90     6180   819.27  -580.37 |    5.38  -89.76    0.00 -495.99
+   8   86,981   237.68     7829  1135.57  -897.89 |    6.67 -137.14   -0.53 -766.89
+   9   84,556   237.74     9121  1617.70 -1379.96 |    8.63 -214.48   -0.98 -1173.13
+  10   82,374   235.84    10865  2283.20 -2047.36 |   18.88 -429.01   -0.36 -1636.87
+  11   79,697   233.38    13037  3357.60 -3124.22 |  -43.56 -836.95   -2.11 -2241.60
+  12   75,134   223.57    13548  4415.22 -4191.65 | -127.06 -1579.52   -1.81 -2483.25
+  13   69,366   208.08    13049  4909.04 -4700.96 | -154.16 -2173.28   -6.28 -2367.24
+  14   62,515   188.21    10644  4468.99 -4280.78 | -137.36 -2084.84   -3.59 -2054.99
+  15   55,230   159.62     6670  2337.28 -2177.66 | -126.33 -1090.71   -5.73 -954.89
+  16   47,778   131.24     3573   851.47  -720.23 | -149.17 -313.89   -4.25 -252.93
+  17   45,655   123.43     2576   341.40  -217.97 | -118.17  -52.90    0.00  -46.90
+  18   44,055   121.02     2477   249.77  -128.75 | -113.66   -9.64    0.00   -5.45
+  19   43,322   120.20     2007   171.03   -50.83 |  -43.67   -2.15    0.00   -5.00
+  20   43,008   120.89     2261   235.66  -114.77 |  -92.18  -19.29    0.00   -3.30
+  21   42,719   120.33     2231   225.22  -104.89 | -104.21   -0.46    0.00   -0.22
+  22   42,947   120.60     2369   247.80  -127.20 | -118.55   -3.33    0.00   -5.31
+  23   42,220   120.62     2805   268.43  -147.81 | -144.75   -0.16    0.00   -2.91
+
+## GATE: net > 0 on at least 70% of days under C=45 -> 1/151 = 1% -> FAIL
+   EVE-only quoting: 73/151 days net>0 (48%) -> FAIL; total NET $-1585.94
+   LIVE-only quoting: 1/151 days net>0 (1%) -> FAIL; total NET $-9233.13
+   DEAD-only quoting: 1/151 days net>0 (1%) -> FAIL; total NET $-96.37
+   FAR-only quoting: 1/151 days net>0 (1%) -> FAIL; total NET $-15345.93
+
+## Worst 5 days (base, C=45, mtm)
+   2026-05-20: net $-692.39  reward $22.72 loss $715.11 pick-offs 2010
+   2026-05-21: net $-442.67  reward $30.79 loss $473.46 pick-offs 1663
+   2026-05-10: net $-401.19  reward $30.83 loss $432.02 pick-offs 1296
+   2026-04-29: net $-397.32  reward $26.84 loss $424.16 pick-offs 1616
+   2026-05-06: net $-393.19  reward $29.83 loss $423.02 pick-offs 1705

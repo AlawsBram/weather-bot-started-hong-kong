@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import math
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 from . import config
 
@@ -26,6 +26,16 @@ TRIGGER = "text_hko"
 def cutoff_value(reading: float) -> int:
     """HK rule: 31.9 counts as 31 (one decimal, decimals cut off)."""
     return math.floor(round(reading, 1) + 1e-9)
+
+
+def reading_day(dt: datetime) -> date:
+    """Which market day a since-midnight reading belongs to. HKO's 00:00 stamp still shows the day that just
+    ended (its max/min are yesterday's), so it is attributed to yesterday; 00:10 is the first reading of a new day.
+    Without this the bot took yesterday's max as today's starting point and no bucket could die all day
+    (2026-10-24: max 28 -> 31, three kills missed)."""
+    if dt.hour == 0 and dt.minute == 0:
+        return (dt - timedelta(minutes=1)).date()
+    return dt.date()
 
 
 def parse(src: str, text: str):

@@ -1,0 +1,180 @@
+=== run 2026-10-23 22:18:42 kills=14 days=4 fallback t_know=418s
+simulated 14 kills, skipped 0: 
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket-only liquidity reward farming
+
+kills simulated: 14 of 14 (skipped 0), calendar days with a kill: 4 (window has 189 days; days without a kill earn nothing in a dead-bucket-only farm)
+size used = each day's gamma rewardsMinSize (orders below it score nothing): 20 shares on 7 kills, 50 shares on 4 kills, 100 shares on 3 kills
+tick: 0.001;  t_know fallback (median 418s) used on 5 kills
+
+DEAD-BUCKET MINUTES (kill -> market close, next day ~10:50 HKT):
+  total 15,817 min = 3,954/day mean, 4,586/day median;  until HKT midnight only: 2,694/day mean
+  quotable (our 1c-below bid can rest without crossing): 1,203 min = 7.6%;  unquotable (book already 0/0.001): 14,614 min = 92.4%
+  midpoint after the kill: median of per-kill medians 0.0005; kills whose post-kill mid ever >= 0.10: 1
+
+FILLS (proxy: next 1-min midpoint reaches our price):
+  YES-bid fills (we buy worthless YES): 21 fills, total loss $20.27 = $5.067/day;  kills with >= 1 bid fill: 10 of 14
+  NO-bid fills (we buy NO worth $1, shown as the YES ask): 0 fills, total gain $0.00; max capital tied in one kill $0.00
+
+REWARD INCOME (pool $/day per dead bucket x our share; share = ourQ/(ourQ+others); 1440 samples/day):
+  pool $1/bucket/day: others=10: $0.113/day (median $0.054)   others=40: $0.049/day (median $0.025)   others=100: $0.023/day (median $0.013)
+  pool $4/bucket/day: others=10: $0.451/day (median $0.215)   others=40: $0.195/day (median $0.101)   others=100: $0.093/day (median $0.053)
+  pool $7/bucket/day: others=10: $0.789/day (median $0.376)   others=40: $0.341/day (median $0.176)   others=100: $0.163/day (median $0.093)
+  per $10 of pool:      others=10: $1.127/day   others=40: $0.488/day   others=100: $0.233/day
+  pool $4, until HKT midnight only: others=10: $0.316/day   others=40: $0.138/day   others=100: $0.067/day
+
+NET $/day (reward - YES-bid losses + NO-bid gains), days with a kill only:
+  pool $1: others=10: mean $-4.955, median $-1.714, net>0 on 0% of days   others=40: mean $-5.019, median $-1.740, net>0 on 0% of days   others=100: mean $-5.044, median $-1.752, net>0 on 0% of days
+  pool $4: others=10: mean $-4.617, median $-1.563, net>0 on 0% of days   others=40: mean $-4.872, median $-1.664, net>0 on 0% of days   others=100: mean $-4.974, median $-1.712, net>0 on 0% of days
+  pool $7: others=10: mean $-4.279, median $-1.411, net>0 on 0% of days   others=40: mean $-4.726, median $-1.589, net>0 on 0% of days   others=100: mean $-4.904, median $-1.672, net>0 on 0% of days
+
+MEDIAN SCENARIO (pool $4/bucket/day, others = 40): net $-4.872/day on kill days, $-0.103/day over every calendar day, net>0 on 0% of kill days
+GATE 'net > 0 on 70% of days AND > $5/day': FAIL  (0% positive, $-4.87/day)
+Today's share of the pool carried by dead/far buckets (Oct-24 event): $12 of $200 = 6%.
+
+worst 5 days by net (pool $4, others 40):
+  2026-10-17: net $-15.21, bid fills 3 ($15.76), dead min 2020, quotable 911
+  2026-10-18: net $-1.71, bid fills 7 ($1.88), dead min 4624, quotable 221
+  2026-10-19: net $-1.62, bid fills 6 ($1.65), dead min 4606, quotable 21
+  2026-10-20: net $-0.95, bid fills 5 ($0.98), dead min 4567, quotable 50
+best 5 days:
+  2026-10-20: net $-0.95, reward $0.03, dead min 4567, quotable 50, kills 4
+  2026-10-19: net $-1.62, reward $0.03, dead min 4606, quotable 21, kills 4
+  2026-10-18: net $-1.71, reward $0.17, dead min 4624, quotable 221, kills 4
+  2026-10-17: net $-15.21, reward $0.55, dead min 2020, quotable 911, kills 2
+=== run 2026-10-23 22:19:36 kills=567 days=169 fallback t_know=418s
+simulated 566 kills, skipped 1: 2026-05-19 25°C: no price history
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket-only liquidity reward farming
+
+kills simulated: 566 of 567 (skipped 1), calendar days with a kill: 168 (window has 189 days; days without a kill earn nothing in a dead-bucket-only farm)
+size used = each day's gamma rewardsMinSize (orders below it score nothing): 20 shares on 155 kills, 50 shares on 290 kills, 100 shares on 121 kills
+tick: 0.001;  t_know fallback (median 418s) used on 92 kills
+
+DEAD-BUCKET MINUTES (kill -> market close, next day ~10:50 HKT):
+  total 637,511 min = 3,795/day mean, 3,660/day median;  until HKT midnight only: 2,582/day mean
+  quotable (our 1c-below bid can rest without crossing): 53,809 min = 8.4%;  unquotable (book already 0/0.001): 583,578 min = 91.5%
+  midpoint after the kill: median of per-kill medians 0.0005; kills whose post-kill mid ever >= 0.10: 75
+
+FILLS (proxy: next 1-min midpoint reaches our price):
+  YES-bid fills (we buy worthless YES): 1391 fills, total loss $418.96 = $2.494/day;  kills with >= 1 bid fill: 473 of 566
+  NO-bid fills (we buy NO worth $1, shown as the YES ask): 23 fills, total gain $47.55; max capital tied in one kill $330.40
+
+REWARD INCOME (pool $/day per dead bucket x our share; share = ourQ/(ourQ+others); 1440 samples/day):
+  pool $1/bucket/day: others=10: $0.158/day (median $0.072)   others=40: $0.087/day (median $0.042)   others=100: $0.047/day (median $0.022)
+  pool $4/bucket/day: others=10: $0.630/day (median $0.286)   others=40: $0.349/day (median $0.167)   others=100: $0.187/day (median $0.089)
+  pool $7/bucket/day: others=10: $1.103/day (median $0.501)   others=40: $0.611/day (median $0.293)   others=100: $0.327/day (median $0.155)
+  per $10 of pool:      others=10: $1.575/day   others=40: $0.872/day   others=100: $0.468/day
+  pool $4, until HKT midnight only: others=10: $0.532/day   others=40: $0.296/day   others=100: $0.160/day
+
+NET $/day (reward - YES-bid losses + NO-bid gains), days with a kill only:
+  pool $1: others=10: mean $-2.053, median $-1.516, net>0 on 6% of days   others=40: mean $-2.124, median $-1.596, net>0 on 4% of days   others=100: mean $-2.164, median $-1.612, net>0 on 2% of days
+  pool $4: others=10: mean $-1.581, median $-0.941, net>0 on 20% of days   others=40: mean $-1.862, median $-1.159, net>0 on 14% of days   others=100: mean $-2.024, median $-1.436, net>0 on 7% of days
+  pool $7: others=10: mean $-1.108, median $-0.508, net>0 on 28% of days   others=40: mean $-1.600, median $-0.988, net>0 on 19% of days   others=100: mean $-1.883, median $-1.148, net>0 on 13% of days
+
+MEDIAN SCENARIO (pool $4/bucket/day, others = 40): net $-1.862/day on kill days, $-1.655/day over every calendar day, net>0 on 14% of kill days
+GATE 'net > 0 on 70% of days AND > $5/day': FAIL  (14% positive, $-1.86/day)
+Today's share of the pool carried by dead/far buckets (Oct-24 event): $12 of $200 = 6%.
+
+worst 5 days by net (pool $4, others 40):
+  2026-07-17: net $-20.68, bid fills 16 ($21.00), dead min 4534, quotable 243
+  2026-09-02: net $-11.59, bid fills 11 ($14.62), dead min 5358, quotable 462
+  2026-09-29: net $-8.10, bid fills 5 ($8.14), dead min 4345, quotable 32
+  2026-08-01: net $-7.37, bid fills 6 ($7.40), dead min 2380, quotable 17
+  2026-09-22: net $-7.35, bid fills 6 ($7.40), dead min 2338, quotable 33
+best 5 days:
+  2026-04-22: net $13.00, reward $0.85, dead min 3475, quotable 765, kills 3
+  2026-04-19: net $7.54, reward $2.64, dead min 5685, quotable 2326, kills 5
+  2026-05-02: net $0.72, reward $0.87, dead min 3203, quotable 733, kills 3
+  2026-04-20: net $0.66, reward $1.01, dead min 2366, quotable 876, kills 2
+  2026-04-15: net $0.52, reward $0.62, dead min 2441, quotable 526, kills 2
+=== run 2026-10-23 22:23:14 kills=12 days=3 fallback t_know=418s size=20 pool_by_rank={1: 50.0, 2: 25.0, 3: 25.0}
+simulated 12 kills, skipped 0: 
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket-only liquidity reward farming
+
+kills simulated: 12 of 12 (skipped 0), calendar days with a kill: 3 (window has 189 days; days without a kill earn nothing in a dead-bucket-only farm)
+order size 20 shares (min size confirmed live 2026-10-23); gamma's historical rewardsMinSize per kill: 20: 5 kills, 50: 4 kills, 100: 3 kills
+tick: 0.001;  t_know fallback (median 418s) used on 5 kills
+
+POOL (rank of the killed bucket by YES mid at 00:00 HKT; rank 1 = $50/day, rank 2-3 = $25/day, else $0):
+  killed buckets by 00:00 rank: rank 1: 1, rank 3: 2, rank 4: 1, rank 5: 3, rank 6: 2, rank 7: 2, rank 8: 1
+  kills WITH a pool: 3 of 12 (25%); days with >= 1 pooled kill: 2 of 3; total pool attached to dead buckets $100 = $33.33/kill-day (of $100/day per event)
+  00:00 mid of killed buckets: median 0.013; pooled kills' median 00:00 mid 0.130
+
+DEAD-BUCKET MINUTES (kill -> 23:59 HKT same day):
+  total 9,465 min = 3,155/day mean, 3,162/day median; pooled kills only: 2,037 min = 679/day
+  quotable (mid < 0.10 and our 1c-below bid rests without crossing): 292 min = 3.1%;  unquotable, book already 0/0.001: 9,173 min = 96.9%;  market still >= 0.10: 0 min = 0.0%
+  pooled kills: quotable 54 of 2,037 min (2.7%)
+  midpoint after the kill: median of per-kill medians 0.0005; kills whose post-kill mid was ever >= 0.10: 0
+
+FILLS (proxy: next 1-min midpoint reaches our price; all kills quoted, pooled or not):
+  YES-bid fills (we buy worthless YES): 18 fills, total loss $2.88 = $0.960/day;  kills with >= 1 bid fill: 8 of 12; median fill price $0.002
+  pooled kills only: 8 fills, loss $1.80 = $0.600/day
+  NO-bid fills (we buy NO worth $1, shown as the YES ask): 0 fills, total gain $0.00; max capital tied in one kill $0.00
+
+REWARD INCOME (ranked pool x our share; share = ourQ/(ourQ+others); 1440 samples/day):
+  others=10: $0.195/day (median $0.150, total $0.59)   others=40: $0.082/day (median $0.063, total $0.25)   others=100: $0.038/day (median $0.029, total $0.11)
+  per $10 of pool on EVERY dead bucket: others=10: $0.363/day   others=40: $0.152/day   others=100: $0.070/day
+  if gamma's historical rewardsMinSize (50/100 on many days) had applied to our 20-share orders: others=10: $0.055/day   others=40: $0.023/day   others=100: $0.011/day
+
+NET $/day (reward - YES-bid losses + NO-bid gains), kill days only:
+  others=10: mean $-0.765, median $-0.980, net>0 on 0% of days   others=40: mean $-0.878, median $-0.980, net>0 on 0% of days   others=100: mean $-0.922, median $-0.980, net>0 on 0% of days
+  quoting ONLY the pooled kills (skip $0 buckets): others=10: $-0.405/day   others=40: $-0.518/day   others=100: $-0.562/day
+
+MEDIAN SCENARIO (others = 40): net $-0.878/day on kill days, $-0.014/day over every calendar day, net>0 on 0% of kill days; reward alone $0.082/day
+GATE 'net > 0 on 70% of days AND > $5/day': FAIL  (0% positive, $-0.88/day)
+
+worst 5 days by net (others 40):
+  2026-10-18: net $-1.38, bid fills 7 ($1.56), reward $0.18, pool $75, dead min 3180, quotable 221
+  2026-10-20: net $-0.98, bid fills 5 ($0.98), reward $0.00, pool $0, dead min 3123, quotable 50
+  2026-10-19: net $-0.28, bid fills 6 ($0.34), reward $0.06, pool $25, dead min 3162, quotable 21
+best 5 days:
+  2026-10-19: net $-0.28, reward $0.06, pool $25, dead min 3162, quotable 21, kills 4, NO-fill gain $0.00
+  2026-10-20: net $-0.98, reward $0.00, pool $0, dead min 3123, quotable 50, kills 4, NO-fill gain $0.00
+  2026-10-18: net $-1.38, reward $0.18, pool $75, dead min 3180, quotable 221, kills 4, NO-fill gain $0.00
+=== run 2026-10-23 22:23:33 kills=567 days=169 fallback t_know=418s size=20 pool_by_rank={1: 50.0, 2: 25.0, 3: 25.0}
+simulated 566 kills, skipped 1: 2026-05-19 25°C: no price history
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket-only liquidity reward farming
+
+kills simulated: 566 of 567 (skipped 1), calendar days with a kill: 168 (window has 189 days; days without a kill earn nothing in a dead-bucket-only farm)
+order size 20 shares (min size confirmed live 2026-10-23); gamma's historical rewardsMinSize per kill: 20: 155 kills, 50: 290 kills, 100: 121 kills
+tick: 0.001;  t_know fallback (median 418s) used on 92 kills
+
+POOL (rank of the killed bucket by YES mid at 00:00 HKT; rank 1 = $50/day, rank 2-3 = $25/day, else $0):
+  killed buckets by 00:00 rank: rank 1: 53, rank 2: 69, rank 3: 62, rank 4: 92, rank 5: 88, rank 6: 66, rank 7: 61, rank 8: 23, rank 9: 18, rank 10: 16, rank 11: 18
+  kills WITH a pool: 184 of 566 (33%); days with >= 1 pooled kill: 118 of 168; total pool attached to dead buckets $5,925 = $35.27/kill-day (of $100/day per event)
+  00:00 mid of killed buckets: median 0.036; pooled kills' median 00:00 mid 0.290
+
+DEAD-BUCKET MINUTES (kill -> 23:59 HKT same day):
+  total 433,185 min = 2,578/day mean, 2,576/day median; pooled kills only: 122,682 min = 730/day
+  quotable (mid < 0.10 and our 1c-below bid rests without crossing): 45,194 min = 10.4%;  unquotable, book already 0/0.001: 387,893 min = 89.5%;  market still >= 0.10: 98 min = 0.0%
+  pooled kills: quotable 21,085 of 122,682 min (17.2%)
+  midpoint after the kill: median of per-kill medians 0.0005; kills whose post-kill mid was ever >= 0.10: 70
+
+FILLS (proxy: next 1-min midpoint reaches our price; all kills quoted, pooled or not):
+  YES-bid fills (we buy worthless YES): 1334 fills, total loss $140.76 = $0.838/day;  kills with >= 1 bid fill: 471 of 566; median fill price $0.001
+  pooled kills only: 633 fills, loss $99.10 = $0.590/day
+  NO-bid fills (we buy NO worth $1, shown as the YES ask): 23 fills, total gain $17.56; max capital tied in one kill $132.16
+
+REWARD INCOME (ranked pool x our share; share = ourQ/(ourQ+others); 1440 samples/day):
+  others=10: $1.541/day (median $0.279, total $258.89)   others=40: $0.638/day (median $0.114, total $107.11)   others=100: $0.294/day (median $0.053, total $49.33)
+  per $10 of pool on EVERY dead bucket: others=10: $0.984/day   others=40: $0.408/day   others=100: $0.188/day
+  if gamma's historical rewardsMinSize (50/100 on many days) had applied to our 20-share orders: others=10: $0.151/day   others=40: $0.063/day   others=100: $0.029/day
+
+NET $/day (reward - YES-bid losses + NO-bid gains), kill days only:
+  others=10: mean $0.808, median $-0.040, net>0 on 43% of days   others=40: mean $-0.096, median $-0.169, net>0 on 26% of days   others=100: mean $-0.440, median $-0.332, net>0 on 14% of days
+  quoting ONLY the pooled kills (skip $0 buckets): others=10: $1.045/day   others=40: $0.141/day   others=100: $-0.203/day
+
+MEDIAN SCENARIO (others = 40): net $-0.096/day on kill days, $-0.085/day over every calendar day, net>0 on 26% of kill days; reward alone $0.638/day
+GATE 'net > 0 on 70% of days AND > $5/day': FAIL  (26% positive, $-0.10/day)
+
+worst 5 days by net (others 40):
+  2026-07-17: net $-3.88, bid fills 16 ($4.40), reward $0.52, pool $100, dead min 3090, quotable 243
+  2026-08-19: net $-2.87, bid fills 5 ($3.14), reward $0.27, pool $25, dead min 2336, quotable 70
+  2026-08-03: net $-2.43, bid fills 7 ($2.50), reward $0.07, pool $75, dead min 2060, quotable 19
+  2026-09-02: net $-2.15, bid fills 11 ($2.94), reward $0.29, pool $100, dead min 3553, quotable 462
+  2026-07-01: net $-2.07, bid fills 16 ($2.48), reward $0.41, pool $25, dead min 3970, quotable 1005
+best 5 days:
+  2026-04-19: net $8.34, reward $6.36, pool $75, dead min 3880, quotable 1686, kills 5, NO-fill gain $3.30
+  2026-04-22: net $5.75, reward $0.89, pool $25, dead min 2392, quotable 765, kills 3, NO-fill gain $7.84
+  2026-04-23: net $5.43, reward $8.01, pool $100, dead min 2397, quotable 1517, kills 3, NO-fill gain $0.70
+  2026-07-04: net $3.99, reward $4.59, pool $100, dead min 3071, quotable 1149, kills 4, NO-fill gain $0.00
+  2026-07-03: net $3.96, reward $4.28, pool $75, dead min 2549, quotable 1209, kills 3, NO-fill gain $0.00

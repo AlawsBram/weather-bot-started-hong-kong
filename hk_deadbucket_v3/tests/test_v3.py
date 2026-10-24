@@ -90,3 +90,36 @@ def test_executor_live_path_with_fake_client(monkeypatch):
     ex.mode = "probe"
     pr = ex.probe("TOK", 0.5, 5, hold_s=0)
     assert pr["order_id"] == "abc" and pr["cancel"] == {"canceled": ["abc"]} and calls[-1] == ("cancel", "abc")
+
+
+# --- the 00:00 stamp belongs to the day that just ended ------------------------------------------------
+def test_reading_day_midnight_stamp_is_yesterday():
+    assert sources.reading_day(datetime(2026, 10, 24, 0, 0, tzinfo=HKT)) == datetime(2026, 10, 23).date()
+    assert sources.reading_day(datetime(2026, 10, 24, 0, 10, tzinfo=HKT)) == datetime(2026, 10, 24).date()
+    assert sources.reading_day(datetime(2026, 10, 24, 23, 50, tzinfo=HKT)) == datetime(2026, 10, 24).date()
+
+
+def test_midnight_reading_does_not_poison_the_new_day(monkeypatch, tmp_path):
+    """Replay of 2026-10-24: 00:00 stamp shows yesterday's 32.3, then 28.3 at 00:10, 29.1 at 11:30 -> 28°C must die."""
+    from v3 import bot as botmod, market
+    from hkbot.buckets import parse_label
+    labels = ("26°C or below", "27°C", "28°C", "29°C", "30°C", "31°C", "32°C", "33°C", "36°C or higher")
+    loaded, killed = [], []
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(market, "load_day", lambda sess, day: loaded.append(day) or [market.Market(parse_label(l), l, "", "", "y" + l, "n" + l) for l in labels])
+    monkeypatch.setattr(market, "book", lambda sess, tok: ([(0.5, 100.0)], [(0.49, 100.0)]))
+    b = botmod.Bot.__new__(botmod.Bot)
+    b.clob = None; b.lock = __import__("threading").Lock(); b.day = None; b.markets = []; b.last_whole = None; b.done = set(); b.stats = {"kills": 0, "polls": 0}
+    b.exe = type("E", (), {"prearm": lambda self, *a, **k: {"label": a[1]}})()
+    monkeypatch.setattr(b, "decide", lambda day, m, deg, *a: killed.append((str(day), m.label, deg)))
+    t = lambda h, mi: datetime(2026, 10, 24, h, mi, tzinfo=HKT)
+    b.day, b.last_whole = datetime(2026, 10, 23).date(), 32           # yesterday ended at 32
+    b.markets = market.load_day(None, b.day); loaded.clear()
+    b.on_trigger(t(0, 0), 32.3, t(0, 7).timestamp())                  # 00:00 stamp = yesterday's max: no new day, no kill
+    assert loaded == [] and killed == [] and b.day == datetime(2026, 10, 23).date()
+    b.on_trigger(t(0, 10), 28.3, t(0, 17).timestamp())                # first reading of the new day: baseline 28
+    assert loaded == [datetime(2026, 10, 24).date()] and b.last_whole == 28 and killed == []
+    b.on_trigger(t(11, 30), 29.1, t(11, 36).timestamp())              # max enters 29 -> 28°C is dead
+    assert killed == [("2026-10-24", "28°C", 29)]
+    b.on_trigger(t(12, 50), 31.0, t(12, 57).timestamp())              # jumps 29 -> 31: 29°C and 30°C both die
+    assert [k[1] for k in killed] == ["28°C", "29°C", "30°C"]

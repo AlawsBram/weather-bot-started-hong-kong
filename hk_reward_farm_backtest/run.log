@@ -1,0 +1,64 @@
+22:22:39 INFO kill list: 567 kills on 169 days; t_know median 418s used as fallback for 93 blanks
+22:22:39 INFO events: 4 (2026-04-15 .. 2026-04-18)
+22:22:39 INFO price series needed 44, already cached 14
+22:22:45 INFO fetch done in 6s
+22:22:46 INFO simulated 1/4 (2026-04-15)
+22:22:48 INFO simulation done in 9s; checks {'markets': 44, 'winner_among_3_rewarded': 4, 'kills_using_fallback_t_know': 3}
+22:22:48 INFO calendar days with any activity 5, complete days 3 (2026-04-15 .. 2026-04-17)
+22:22:48 INFO wrote outputs in 9s
+22:24:43 INFO kill list: 567 kills on 169 days; t_know median 418s used as fallback for 93 blanks
+22:24:43 INFO events: 4 (2026-04-15 .. 2026-04-18)
+22:24:43 INFO price series needed 44, already cached 44
+22:24:43 INFO simulated 1/4 (2026-04-15)
+22:24:45 INFO simulation done in 2s; checks {'markets': 44, 'winner_among_3_rewarded': 4, 'markets_with_trade_tape': 14, 'kills_using_fallback_t_know': 3}
+22:24:45 INFO calendar days with any activity 5, complete days 3 (2026-04-15 .. 2026-04-17)
+22:24:45 INFO wrote outputs in 2s
+22:24:46 INFO kill list: 567 kills on 169 days; t_know median 418s used as fallback for 93 blanks
+22:24:47 INFO events: 4 (2026-04-15 .. 2026-04-18)
+22:24:47 INFO price series needed 44, already cached 44
+22:24:47 INFO simulated 1/4 (2026-04-15)
+22:24:49 INFO simulation done in 2s; checks {'markets': 44, 'winner_among_3_rewarded': 4, 'markets_with_trade_tape': 14, 'kills_using_fallback_t_know': 3}
+22:24:49 INFO calendar days with any activity 5, complete days 3 (2026-04-15 .. 2026-04-17)
+22:24:49 INFO wrote outputs in 2s
+22:25:42 INFO kill list: 567 kills on 169 days; t_know median 418s used as fallback for 93 blanks
+22:25:42 INFO events: 4 (2026-04-15 .. 2026-04-18)
+22:25:42 INFO price series needed 44, already cached 44
+22:25:43 INFO simulated 1/4 (2026-04-15)
+22:25:44 INFO simulation done in 3s; checks {'markets': 44, 'winner_among_3_rewarded': 4, 'markets_with_trade_tape': 14, 'kills_using_fallback_t_know': 3}
+22:25:44 INFO calendar days with any activity 5, complete days 3 (2026-04-15 .. 2026-04-17)
+22:25:44 INFO wrote outputs in 3s
+22:25:46 INFO kill list: 567 kills on 169 days; t_know median 418s used as fallback for 93 blanks
+22:25:46 INFO events: 169 (2026-04-15 .. 2026-10-20)
+22:25:47 INFO price series needed 1859, already cached 597
+22:25:52 INFO fetched 100/1859
+22:26:02 INFO fetched 200/1859
+22:26:20 INFO fetched 300/1859
+22:26:29 INFO fetched 400/1859
+22:26:38 INFO fetched 500/1859
+22:26:48 INFO fetched 600/1859
+22:27:03 INFO fetched 700/1859
+22:27:12 INFO fetched 800/1859
+22:27:22 INFO fetched 900/1859
+22:27:32 INFO fetched 1000/1859
+22:27:43 INFO fetched 1100/1859
+22:27:57 INFO fetched 1200/1859
+22:28:04 INFO fetched 1300/1859
+22:28:10 INFO fetched 1400/1859
+22:28:20 INFO fetched 1500/1859
+22:28:33 INFO fetched 1600/1859
+22:28:43 INFO fetched 1700/1859
+22:28:49 INFO fetched 1800/1859
+22:29:17 WARNING fetch 912014115264.. attempt 1 failed (HTTPSConnectionPool(host='clob.polymarket.com', port=443): Read timed out. (read timeout=60)); sleeping 2s
+22:29:19 INFO fetch done in 213s
+22:29:21 INFO simulated 1/169 (2026-04-15)
+22:29:52 INFO simulated 21/169 (2026-05-07)
+22:30:09 INFO simulated 41/169 (2026-05-31)
+22:30:20 INFO simulated 61/169 (2026-06-21)
+22:30:33 INFO simulated 81/169 (2026-07-11)
+22:30:46 INFO simulated 101/169 (2026-08-04)
+22:30:58 INFO simulated 121/169 (2026-08-27)
+22:31:10 INFO simulated 141/169 (2026-09-17)
+22:31:20 INFO simulated 161/169 (2026-10-10)
+22:31:25 INFO simulation done in 338s; checks {'markets': 1859, 'winner_among_3_rewarded': 150, 'markets_with_trade_tape': 567, 'kills_using_fallback_t_know': 93, 'markets_with_sparse_prices(<100 pts)': 11, 'pool_pick_used_first_price_of_day': 22}
+22:31:25 INFO calendar days with any activity 185, complete days 151 (2026-04-15 .. 2026-10-19)
+22:31:25 INFO wrote outputs in 339s

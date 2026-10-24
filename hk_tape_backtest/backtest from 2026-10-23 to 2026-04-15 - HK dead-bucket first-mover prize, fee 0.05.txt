@@ -1,0 +1,24 @@
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket first-mover prize, fee 0.05
+
+kills: 567 (0 without a market)
+taker fee rate applied: 0.05  (fee per fill = size * 0.05 * p * (1-p), rounded to 5 dp)  gross $23,209.48  fees $716.80  net $22,492.69
+prize taken by first movers (NO bought <= 97c after the stamp, valued at 99.9c, NET of fee): total $22,493, median per kill $0.00, mean $39.67
+kills with prize >= $10: 113   >= $50: 72   >= $200: 28
+per calendar day: median $13, mean $133 over 169 days
+time from the HKO stamp to the market 'knowing' (first trade at NO >= 98.5c): median 7.0 min, p10 4.4, p90 8.0  (n=474)
+time from the stamp to the first sweep trade: median 4.4 min (n=167)
+time from the stamp to HKO's public file in the archive: median 8.0 min
+
+top wallets by $ taken (name, wallet, $, kills where they were the top taker):
+  Tan-Humor                0x2662228cdc5e641db1a64ff9a8bd1704ad4a40b7  $1,903  top in 19 kills
+  Anxious-Dwelling         0x100a50d9f27bc1a884f8a47accad209a9188c6ce  $1,743  top in 1 kills
+  Attractive-Position      0xb98c83f1c9bc913600b0930a98402f6681688f64  $1,466  top in 14 kills
+  Fabulous-Skean           0x3d3ca331c493bed9208e242af7589ff73ef415ed  $1,337  top in 11 kills
+  Beloved-Contract-Domain  0x81300a0a80718398f9ab90db00d4b85a76245a50  $1,208  top in 7 kills
+  Relieved-Storyboard      0x592d542d25d999f8a606359594b58a4bcb3f4b16  $936  top in 11 kills
+  Cultured-Guide           0x35bc8b057201f0b787d8ffb7398b3df0831b70de  $834  top in 2 kills
+  Euphoric-Entirety        0x116db6298abcdefe06f9f5458c293c7de185fbf1  $607  top in 6 kills
+  Fine-Passive-Cufflink    0x1a9cfddd25dfa4f5b99f39bb928fdaed4e6a079d  $501  top in 5 kills
+  Emotional-Overflight-Geology 0x47e836e0788f9a14f2879d02130782f2569daa81  $444  top in 5 kills
+  Advanced-Metabolite      0xcf4dab1c7fe0ef23dca42bdfd857dd3c5cbccb2d  $225  top in 2 kills
+  Funny-Centre             0x64902205dda79a6a031f7817c9c42a0b0adf687f  $175  top in 1 kills

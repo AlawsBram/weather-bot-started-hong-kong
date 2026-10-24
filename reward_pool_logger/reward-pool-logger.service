@@ -1,0 +1,11 @@
+[Unit]
+Description=Polymarket liquidity-reward pool logger (read-only, daily temperature markets)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/reward_pool_logger
+ExecStart=/usr/bin/python3 /home/ubuntupolymarket3/reward_pool_logger/reward_pool_logger.py
+Nice=10

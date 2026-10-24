@@ -13,7 +13,7 @@ from pathlib import Path
 import requests
 
 from . import alerts, config
-from .sources import HKT, SOURCES, cutoff_value
+from .sources import HKT, SOURCES, cutoff_value, reading_day
 
 HKBOT = Path(os.environ.get("HKBOT_DIR", Path.home() / "hkbot"))
 if str(HKBOT) not in sys.path:
@@ -31,15 +31,16 @@ def official_max(day: date):
 
 
 def load(day: date) -> list[dict]:
-    f = config.DATA_DIR / f"versions-{day}.csv"
-    if not f.exists():
-        return []
-    rows = list(csv.DictReader(f.open(encoding="utf-8")))
+    rows = []
+    for d in (day, day + timedelta(days=1)):        # the day's 00:00 stamp is first seen (and filed) on the next day
+        f = config.DATA_DIR / f"versions-{d}.csv"
+        if f.exists():
+            rows += list(csv.DictReader(f.open(encoding="utf-8")))
     for r in rows:
         r["seen"] = datetime.fromisoformat(r["first_seen_utc"])
         r["reading"] = datetime.strptime(r["reading_hkt"], "%Y-%m-%d %H:%M").replace(tzinfo=HKT)
         r["hi"] = float(r["max"]) if r["max"] else float(r["temp"])
-    return [r for r in rows if r["reading"].date() == day]
+    return [r for r in rows if reading_day(r["reading"]) == day]
 
 
 def main():

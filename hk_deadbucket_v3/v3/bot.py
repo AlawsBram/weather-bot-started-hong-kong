@@ -138,7 +138,7 @@ class Bot:
 
     # ---------------- trigger: a new text-page reading ----------------
     def on_trigger(self, reading_dt: datetime, max_c: float, seen: float):
-        day = reading_dt.date()
+        day = sources.reading_day(reading_dt)      # the 00:00 stamp is yesterday's max, not today's baseline
         if day != self.day:
             self.markets = market.load_day(self.clob, day)
             self.day, self.last_whole = day, None

@@ -1,0 +1,46 @@
+# backtest from 2026-10-23 to 2026-04-15 - HK dead-bucket-only liquidity reward farming
+
+kills simulated: 566 of 567 (skipped 1), calendar days with a kill: 168 (window has 189 days; days without a kill earn nothing in a dead-bucket-only farm)
+order size 20 shares (min size confirmed live 2026-10-23); gamma's historical rewardsMinSize per kill: 20: 155 kills, 50: 290 kills, 100: 121 kills
+tick: 0.001;  t_know fallback (median 418s) used on 92 kills
+
+POOL (rank of the killed bucket by YES mid at 00:00 HKT; rank 1 = $50/day, rank 2-3 = $25/day, else $0):
+  killed buckets by 00:00 rank: rank 1: 53, rank 2: 69, rank 3: 62, rank 4: 92, rank 5: 88, rank 6: 66, rank 7: 61, rank 8: 23, rank 9: 18, rank 10: 16, rank 11: 18
+  kills WITH a pool: 184 of 566 (33%); days with >= 1 pooled kill: 118 of 168; total pool attached to dead buckets $5,925 = $35.27/kill-day (of $100/day per event)
+  00:00 mid of killed buckets: median 0.036; pooled kills' median 00:00 mid 0.290
+
+DEAD-BUCKET MINUTES (kill -> 23:59 HKT same day):
+  total 433,185 min = 2,578/day mean, 2,576/day median; pooled kills only: 122,682 min = 730/day
+  quotable (mid < 0.10 and our 1c-below bid rests without crossing): 45,194 min = 10.4%;  unquotable, book already 0/0.001: 387,893 min = 89.5%;  market still >= 0.10: 98 min = 0.0%
+  pooled kills: quotable 21,085 of 122,682 min (17.2%)
+  midpoint after the kill: median of per-kill medians 0.0005; kills whose post-kill mid was ever >= 0.10: 70
+
+FILLS (proxy: next 1-min midpoint reaches our price; all kills quoted, pooled or not):
+  YES-bid fills (we buy worthless YES): 1334 fills, total loss $140.76 = $0.838/day;  kills with >= 1 bid fill: 471 of 566; median fill price $0.001
+  pooled kills only: 633 fills, loss $99.10 = $0.590/day
+  NO-bid fills (we buy NO worth $1, shown as the YES ask): 23 fills, total gain $17.56; max capital tied in one kill $132.16
+
+REWARD INCOME (ranked pool x our share; share = ourQ/(ourQ+others); 1440 samples/day):
+  others=10: $1.541/day (median $0.279, total $258.89)   others=40: $0.638/day (median $0.114, total $107.11)   others=100: $0.294/day (median $0.053, total $49.33)
+  per $10 of pool on EVERY dead bucket: others=10: $0.984/day   others=40: $0.408/day   others=100: $0.188/day
+  if gamma's historical rewardsMinSize (50/100 on many days) had applied to our 20-share orders: others=10: $0.151/day   others=40: $0.063/day   others=100: $0.029/day
+
+NET $/day (reward - YES-bid losses + NO-bid gains), kill days only:
+  others=10: mean $0.808, median $-0.040, net>0 on 43% of days   others=40: mean $-0.096, median $-0.169, net>0 on 26% of days   others=100: mean $-0.440, median $-0.332, net>0 on 14% of days
+  quoting ONLY the pooled kills (skip $0 buckets): others=10: $1.045/day   others=40: $0.141/day   others=100: $-0.203/day
+
+MEDIAN SCENARIO (others = 40): net $-0.096/day on kill days, $-0.085/day over every calendar day, net>0 on 26% of kill days; reward alone $0.638/day
+GATE 'net > 0 on 70% of days AND > $5/day': FAIL  (26% positive, $-0.10/day)
+
+worst 5 days by net (others 40):
+  2026-07-17: net $-3.88, bid fills 16 ($4.40), reward $0.52, pool $100, dead min 3090, quotable 243
+  2026-08-19: net $-2.87, bid fills 5 ($3.14), reward $0.27, pool $25, dead min 2336, quotable 70
+  2026-08-03: net $-2.43, bid fills 7 ($2.50), reward $0.07, pool $75, dead min 2060, quotable 19
+  2026-09-02: net $-2.15, bid fills 11 ($2.94), reward $0.29, pool $100, dead min 3553, quotable 462
+  2026-07-01: net $-2.07, bid fills 16 ($2.48), reward $0.41, pool $25, dead min 3970, quotable 1005
+best 5 days:
+  2026-04-19: net $8.34, reward $6.36, pool $75, dead min 3880, quotable 1686, kills 5, NO-fill gain $3.30
+  2026-04-22: net $5.75, reward $0.89, pool $25, dead min 2392, quotable 765, kills 3, NO-fill gain $7.84
+  2026-04-23: net $5.43, reward $8.01, pool $100, dead min 2397, quotable 1517, kills 3, NO-fill gain $0.70
+  2026-07-04: net $3.99, reward $4.59, pool $100, dead min 3071, quotable 1149, kills 4, NO-fill gain $0.00
+  2026-07-03: net $3.96, reward $4.28, pool $75, dead min 2549, quotable 1209, kills 3, NO-fill gain $0.00
