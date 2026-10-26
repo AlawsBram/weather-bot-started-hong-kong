@@ -1,0 +1,10 @@
+[Unit]
+Description=HK dead-bucket v3.1 (direct HKO server IP trigger): reconcile
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 reconcile
+StandardOutput=append:/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip/logs/reconcile.log
+StandardError=append:/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip/logs/reconcile.log

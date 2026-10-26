@@ -1,0 +1,22 @@
+[Unit]
+Description=HK dead-bucket v3.1 (direct HKO server IP trigger): text page fetched from both HKO server IPs, first to show a new stamp fires, dead buckets -> NO (mode from deploy/.env V3_MODE, default dry)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip
+EnvironmentFile=-/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip/deploy/.env
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 run --mode ${V3_MODE}
+Environment=PYTHONUNBUFFERED=1
+Environment=V3_MODE=dry
+Restart=always
+RestartSec=20
+Nice=5
+MemoryMax=400M
+StandardOutput=append:/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip/logs/bot.log
+StandardError=append:/home/ubuntupolymarket3/hk_deadbucket_v3_1_direct_ip/logs/bot.log
+
+[Install]
+WantedBy=multi-user.target
