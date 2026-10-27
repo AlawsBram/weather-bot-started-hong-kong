@@ -1,0 +1,10 @@
+[Unit]
+Description=HK dead-bucket v3.2 (several connections per HKO server IP, first wins): settle
+
+[Service]
+Type=oneshot
+User=ubuntupolymarket3
+WorkingDirectory=/home/ubuntupolymarket3/hk_deadbucket_v3_2_multi_conn
+ExecStart=/home/ubuntupolymarket3/hkbot/.venv/bin/python -m v3 settle
+StandardOutput=append:/home/ubuntupolymarket3/hk_deadbucket_v3_2_multi_conn/logs/settle.log
+StandardError=append:/home/ubuntupolymarket3/hk_deadbucket_v3_2_multi_conn/logs/settle.log

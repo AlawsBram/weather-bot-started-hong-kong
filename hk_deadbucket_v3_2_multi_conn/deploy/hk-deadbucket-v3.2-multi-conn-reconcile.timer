@@ -1,0 +1,9 @@
+[Unit]
+Description=HK dead-bucket v3.2 (several connections per HKO server IP, first wins): daily speed + official-max check at 10:00 HKT
+
+[Timer]
+OnCalendar=*-*-* 10:00:00 Asia/Hong_Kong
+Persistent=true
+
+[Install]
+WantedBy=timers.target
